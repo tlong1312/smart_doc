@@ -1,0 +1,35 @@
+# ==========================================
+# 🌐 CORE WEB FRAMEWORK (DJANGO & API)
+# ==========================================
+Django>=4.2.0
+djangorestframework>=3.14.0
+django-cors-headers>=4.3.0
+
+# ==========================================
+# 🗄️ DATABASE & VECTOR STORE (POSTGRESQL + PGVECTOR)
+# ==========================================
+psycopg2-binary>=2.9.9      # Driver để Django kết nối với PostgreSQL
+pgvector>=0.2.5             # Thư viện hỗ trợ kiểu dữ liệu Vector trong Postgres
+langchain-postgres>=0.0.9   # Để Langchain lưu vector thẳng vào Postgres
+faiss-cpu>=1.8.0            # Vẫn giữ FAISS dự phòng hoặc dùng cho test local
+
+# ==========================================
+# 🧠 AI & LANGCHAIN CORE
+# ==========================================
+langchain>=0.1.0
+langchain-community>=0.0.20
+langchain-ollama>=0.0.1
+langchain-text-splitters>=0.0.1
+
+# ==========================================
+# 📄 DOCUMENT LOADERS (XỬ LÝ TÀI LIỆU)
+# ==========================================
+pymupdf>=1.23.0             # Máy cày đọc PDF siêu việt (thay cho pypdf)
+docx2txt>=0.8               # Đọc file Word (DOCX)
+unstructured>=0.12.0        # Xử lý hình ảnh và các định dạng phức tạp
+
+# ==========================================
+# 🔒 SECURITY & AUTH (TÙY CHỌN)
+# ==========================================
+# Mở comment dòng dưới nếu team code xong phần Đăng nhập/Đăng ký
+djangorestframework-simplejwt>=5.3.1
