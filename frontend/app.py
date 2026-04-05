@@ -2,35 +2,86 @@ import streamlit as st
 import requests
 
 # Cấu hình đường dẫn API Backend của bạn
-BACKEND_URL = " http://127.0.0.1:8000/api"
+BACKEND_URL = "http://127.0.0.1:8000/api"
+
+# ==========================================
+# 1. KHỞI TẠO BỘ NHỚ LƯU ID TÀI LIỆU
+# ==========================================
+# Phải là mảng [] để tích lũy dần mỗi khi user up thêm file
+if 'document_ids' not in st.session_state:
+    st.session_state['document_ids'] = []
 
 st.set_page_config(page_title="SmartDoc AI", page_icon="📄")
-
 st.title("🤖 SmartDoc AI - Intelligent Document Q&A System")
 
-# Nơi tải file lên
-uploaded_file = st.file_uploader("Tải lên tài liệu PDF hoặc DOCX", type=['pdf', 'docx'])
+# ==========================================
+# 2. KHU VỰC UPLOAD (Cho phép chọn nhiều file)
+# ==========================================
+uploaded_files = st.file_uploader(
+    "Tải lên tài liệu PDF hoặc DOCX (Có thể chọn nhiều file)",
+    type=['pdf', 'docx'],
+    accept_multiple_files=True
+)
 
 if st.button("Xử lý tài liệu"):
-    if uploaded_file is not None:
-        with st.spinner('Đang tải lên và xử lý dữ liệu (AI đang đọc)...'):
-            # Chuẩn bị file để gửi qua API Django
-            files = {'file': (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
+    if uploaded_files:
+        # Giao diện loading xịn xò
+        progress_bar = st.progress(0)
+        status_text = st.empty()
+
+        total_files = len(uploaded_files)
+        success_count = 0
+
+        # ==========================================
+        # 3. VÒNG LẶP UPLOAD TỪNG FILE XUỐNG BACKEND
+        # ==========================================
+        for i, file in enumerate(uploaded_files):
+            status_text.text(f"Đang xử lý {i + 1}/{total_files}: {file.name}...")
+
+            # Đóng gói đúng 1 file cho mỗi lần gọi API (khớp với BE của bạn)
+            files_payload = {'file': (file.name, file.getvalue(), file.type)}
 
             try:
-                response = requests.post(f"{BACKEND_URL}/upload/",
-                                         files=files)  # Trỏ đúng tên API trong urls.py
+                # Bắn request POST
+                response = requests.post(f"{BACKEND_URL}/upload/", files=files_payload)
+
                 if response.status_code == 200:
                     data = response.json()
-                    st.success(f"Thành công! {data.get('message', '')}")
-                    # Lưu lại ID tài liệu vào session_state để lát nữa hỏi đáp
-                    st.session_state['document_id'] = data.get('document_id')
+                    new_id = data.get('document_id')  # Lấy ID Backend trả về
+
+                    if new_id:
+                        # TUYỆT CHIÊU: Nhét ID mới vào kho lưu trữ chung
+                        st.session_state['document_ids'].append(new_id)
+                    success_count += 1
                 else:
-                    st.error(f"Lỗi hệ thống: {response.json().get('error', 'Không xác định')}")
+                    st.error(f"Lỗi file {file.name}: {response.json().get('error', 'Lỗi không xác định')}")
+
             except Exception as e:
-                st.error("Không thể kết nối đến Backend Server. Hãy chắc chắn Django đang chạy ở port 8000!")
+                st.error(f"Không thể kết nối Backend khi up file {file.name}! Kiểm tra port 8000.")
+
+            # Tăng thanh tiến trình lên (ví dụ up 1/2 file thì thanh chạy 50%)
+            progress_bar.progress((i + 1) / total_files)
+
+        # ==========================================
+        # 4. DỌN DẸP & THÔNG BÁO HOÀN TẤT
+        # ==========================================
+        # Xóa các ID trùng lặp phòng trường hợp user up 1 file 2 lần
+        st.session_state['document_ids'] = list(set(st.session_state['document_ids']))
+
+        status_text.text(f"Hoàn tất! Đã đọc thành công {success_count}/{total_files} tài liệu.")
+
     else:
-        st.warning("Vui lòng chọn một file trước khi bấm xử lý.")
+        st.warning("Vui lòng chọn ít nhất 1 file trước khi bấm xử lý.")
 
 st.divider()
+
+# ==========================================
+# 5. HIỂN THỊ TRẠNG THÁI CHO USER BIẾT
+# ==========================================
+if st.session_state['document_ids']:
+    st.info(
+        f"📚 Hệ thống đang ghi nhớ **{len(st.session_state['document_ids'])}** tài liệu. Đã sẵn sàng để trả lời câu hỏi!")
+else:
+    st.write("*(Chưa có tài liệu nào trong bộ nhớ...)*")
+
 st.write("*(Khu vực Chat UI team FE sẽ code tiếp ở đây...)*")
