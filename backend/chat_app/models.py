@@ -19,7 +19,7 @@ class Document(models.Model):
 class ChatSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='sessions')
+    documents = models.ManyToManyField(Document, related_name='sessions')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

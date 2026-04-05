@@ -8,7 +8,7 @@ from langchain_classic.chains.combine_documents import create_stuff_documents_ch
 from .config import EMBEDDING_MODEL, LLM_MODEL, INDEX_DIR, RETRIEVER_K
 from pathlib import Path
 
-def ask_document(faiss_path: str, question: str, history: str = "", file_name: str = ""):
+def ask_documents(faiss_path: str, question: str, history: str = "", doc_ids: list = []):
     """Hỏi đáp dựa trên FAISS index của từng file cụ thể"""
     if not os.path.exists(faiss_path):
         raise ValueError("Chưa có FAISS index cho tài liệu này. Vui lòng kiểm tra lại.")
@@ -20,29 +20,31 @@ def ask_document(faiss_path: str, question: str, history: str = "", file_name: s
             embeddings=embeddings,
             allow_dangerous_deserialization=True
         )
-        retriever = vector_store.as_retriever(search_kwargs={"k": RETRIEVER_K})
+        search_kwargs = {"k": RETRIEVER_K}
+        if doc_ids:
+            search_kwargs["filter"] = lambda metadata: metadata.get("doc_id") in doc_ids
+
+        retriever = vector_store.as_retriever(search_kwargs=search_kwargs)
 
         llm = ChatOllama(model=LLM_MODEL, temperature=0.3)
 
         prompt = PromptTemplate.from_template(
-            """You are a highly capable and logical AI assistant. Your task is to answer the user's question based ONLY on the provided conversation history and context snippets.
+            """You are a helpful and precise legal AI assistant. Your task is to answer the user's question based ONLY on the provided context.
 
-Document Name: {file_name}
+INSTRUCTIONS:
+1. COMPREHENSION: Read the provided Context carefully. If the user asks for a comparison, clearly state the differences or similarities found in the Context.
+2. REWRITE, DO NOT COPY: The Context may contain OCR errors or missing diacritics. DO NOT copy-paste the text exactly. You must paraphrase the information into clear, natural, and grammatically correct Vietnamese.
+3. STRICT GROUNDING: If the Context does NOT contain the information needed to answer the question, output EXACTLY: "Không có thông tin". Do not explain further.
+4. LANGUAGE: Your final response MUST be in Vietnamese.
 
-CRITICAL INSTRUCTIONS:
-1. ANALYZE CONTEXT: Read the Document Name and extracted context snippets carefully. 
-2. LOGICAL DEDUCTION: Connect the dots intelligently. Resolve pronouns (e.g., "he", "they", "that place") by looking at the Conversation History.
-3. STRICT GROUNDING: If the context does NOT contain the answer, reply EXACTLY with: "Không có thông tin".
-4. OUTPUT LANGUAGE: Your final answer MUST be entirely in natural, clear, and concise VIETNAMESE.
+Context:
+{context}
 
 Conversation History:
 {history}
 
-Context (Extracted Document Snippets):
-{context}
-
-User Question: {input}
-AI Answer (in Vietnamese):"""
+Question: {input}
+Answer (in Vietnamese):"""
         )
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
@@ -51,7 +53,6 @@ AI Answer (in Vietnamese):"""
         response = rag_chain.invoke({
             "input": question,
             "history": history,
-            "file_name": file_name
         })
 
         print("\n===== TÀI LIỆU FAISS TÌM ĐƯỢC VÀ MỚM CHO AI =====")

@@ -33,3 +33,28 @@ unstructured>=0.12.0        # Xử lý hình ảnh và các định dạng phứ
 # ==========================================
 # Mở comment dòng dưới nếu team code xong phần Đăng nhập/Đăng ký
 djangorestframework-simplejwt>=5.3.1
+
+# ==========================================
+# 👁️ OCR & IMAGE PROCESSING (MỚI THÊM CHO RAG)
+# ==========================================
+paddleocr>=2.7.0.3          # Lõi OCR đọc chữ từ ảnh/PDF scan
+paddlepaddle>=2.6.0         # Engine bắt buộc để chạy được paddleocr
+opencv-python>=4.8.0        # Xử lý, lọc nhiễu ảnh (cv2)
+Pillow>=10.2.0              # Xử lý định dạng ảnh (PIL)
+numpy>=1.26.0               # Tính toán ma trận ảnh cho OpenCV
+
+# ==========================================
+# 🛠️ UTILS & HTTP REQUESTS (GIAO TIẾP FE - BE)
+# ==========================================
+requests>=2.31.0            # Cực kỳ quan trọng để Streamlit gọi API xuống Django
+python-dotenv>=1.0.0        # Đọc các biến môi trường bảo mật từ file .env
+
+# ==========================================
+# 🧩 LANGCHAIN CLASSIC (HỖ TRỢ QUERY CHAINS)
+# ==========================================
+langchain-classic>=1.0.0    # Chứa các module create_retrieval_chain cũ nhưng rất ổn định
+
+# ==========================================
+# 📝 MỞ RỘNG XỬ LÝ TÀI LIỆU (CÂU HỎI 1)
+# ==========================================
+python-docx>=1.1.0          # Lõi đọc và xử lý file Word (.docx) chuyên sâu

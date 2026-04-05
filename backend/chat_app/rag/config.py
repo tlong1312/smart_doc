@@ -5,12 +5,12 @@ UPLOAD_DIR = Path("uploads")
 INDEX_DIR = Path("faiss_index")
 
 # Model
-EMBEDDING_MODEL = "nomic-embed-text"
-LLM_MODEL = "qwen2.5:3b"  # Thay nếu dùng model khác
+EMBEDDING_MODEL = "mxbai-embed-large"
+LLM_MODEL = "llama3.2:3b"  # Thay nếu dùng model khác
 
 # Chunking params
-CHUNK_SIZE = 1500
-CHUNK_OVERLAP = 300
+CHUNK_SIZE = 700
+CHUNK_OVERLAP = 150
 
 # Retrieval params
 RETRIEVER_K = 4

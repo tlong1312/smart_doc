@@ -7,8 +7,8 @@ rag_env/
 venv/
 env/
 
-uploads/
-faiss_index/
+backend/uploads/
+backend/faiss_index/
 media/
 
 .idea/

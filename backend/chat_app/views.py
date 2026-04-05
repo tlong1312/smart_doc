@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from .models import Document, ChatSession, ChatMessage
 from .rag.ingestion import ingest_file
-from .rag.query import ask_document
+from .rag.query import ask_documents
 
 
 # Create your views here.
@@ -46,20 +46,25 @@ def upload_document(request):
 
 @api_view(['POST'])
 def chat_with_document(request):
-    doc_id = request.data.get("document_id")
+    doc_ids = request.data.get("document_ids", [])
     user_message = request.data.get("message")
     session_id = request.data.get("session_id")
 
-    if not doc_id or not user_message:
-        return Response({"error": "Thiếu document_id hoặc message!"}, status=status.HTTP_400_BAD_REQUEST)
+    if not doc_ids or not user_message:
+        return Response({"error": "Thiếu document_ids (mảng) hoặc message!"}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        doc = Document.objects.get(id=doc_id)
+        docs = Document.objects.filter(id__in=doc_ids)
+        if not docs.exists():
+            return Response({"error": "Không tìm thấy tài liệu nào hợp lệ!"}, status=status.HTTP_404_NOT_FOUND)
 
         if session_id:
-            session = ChatSession.objects.get(id=session_id, document=doc)
+            session = ChatSession.objects.get(id=session_id)
+            for doc in docs:
+                session.documents.add(doc)
         else:
-            session = ChatSession.objects.create(document=doc)
+            session = ChatSession.objects.create()
+            session.documents.set(docs)
 
         ChatMessage.objects.create(
             session=session,
@@ -73,13 +78,10 @@ def chat_with_document(request):
             sender_name = "Người dùng" if msg.sender == 'USER' else "AI"
             history_text += f"{sender_name}: {msg.message_text}\n"
 
-        if not doc.faiss_folder_path:
-            return Response(
-                {"error": "Tài liệu này bị lỗi trong quá trình nhúng Vector. Vui lòng Upload lại file!"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        absolute_faiss_path = os.path.join(settings.BASE_DIR, doc.faiss_folder_path)
-        ai_response_text = ask_document(absolute_faiss_path, user_message, history_text, doc.file_name)
+        absolute_faiss_path = os.path.join(settings.BASE_DIR, 'faiss_index', 'global_index')
+        doc_ids_str = [str(d.id) for d in docs]
+
+        ai_response_text = ask_documents(absolute_faiss_path, user_message, history_text, doc_ids_str)
 
         ChatMessage.objects.create(
             session=session,
