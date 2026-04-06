@@ -1,3 +1,4 @@
+import pickle
 import re
 
 import cv2
@@ -5,6 +6,8 @@ import fitz
 import numpy as np
 from PIL import Image
 from django.conf import settings
+from langchain_community.retrievers import BM25Retriever
+from langchain_huggingface import HuggingFaceEmbeddings
 from paddleocr import PaddleOCR
 from langchain_core.documents import Document as LcDocument
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader, UnstructuredImageLoader, \
@@ -110,6 +113,12 @@ def ingest_file(file_path: str, doc_id: str):
         for doc in docs:
             clean_text = re.sub(r' {2,}', ' ', doc.page_content)
             doc.page_content = clean_text.replace("..", ".").strip()
+            raw_page = doc.metadata.get("page")
+            if isinstance(raw_page, int):
+                doc.metadata["page"] = raw_page + 1 if raw_page >= 0 else 1
+            else:
+                doc.metadata["page"] = 1
+
             doc.metadata["doc_id"] = str(doc_id)
             doc.metadata["file_name"] = file_name
 
@@ -124,7 +133,11 @@ def ingest_file(file_path: str, doc_id: str):
         if not chunks or len(chunks) == 0:
             return {"status": "error",
                     "msg": "Không tìm thấy nội dung văn bản nào trong tài liệu. Vui lòng kiểm tra lại chất lượng hình ảnh hoặc file tải lên!"}
-        embeddings = OllamaEmbeddings(model=EMBEDDING_MODEL)
+        embeddings = HuggingFaceEmbeddings(
+            model_name=EMBEDDING_MODEL,
+            model_kwargs={'device': 'cpu'},
+            encode_kwargs={'normalize_embeddings': True}
+        )
 
         global_save_path = os.path.join(INDEX_DIR, "global_index")
 
@@ -135,6 +148,18 @@ def ingest_file(file_path: str, doc_id: str):
             vector_store = FAISS.from_documents(chunks, embeddings)
 
         vector_store.save_local(global_save_path)
+
+        # bm25_save_path = os.path.join(INDEX_DIR, "bm25_index.pkl")
+        # if os.path.exists(bm25_save_path):
+        #     with open(bm25_save_path, "rb") as f:
+        #         old_bm25 = pickle.load(f)
+        #         old_docs = old_bm25.docs
+        #         bm25_retriever = BM25Retriever().from_documents(old_docs + chunks)
+        # else:
+        #     bm25_retriever = BM25Retriever().from_documents(chunks)
+        #
+        # with open(bm25_save_path, "wb") as f:
+        #     pickle.dump(bm25_retriever, f)
 
         return {
             "status": "success",

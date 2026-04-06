@@ -81,7 +81,12 @@ def chat_with_document(request):
         absolute_faiss_path = os.path.join(settings.BASE_DIR, 'faiss_index', 'global_index')
         doc_ids_str = [str(d.id) for d in docs]
 
-        ai_response_text = ask_documents(absolute_faiss_path, user_message, history_text, doc_ids_str)
+        ai_response_text, source_list = ask_documents(
+            absolute_faiss_path,
+            user_message,
+            history_text,
+            doc_ids_str
+        )
 
         ChatMessage.objects.create(
             session=session,
@@ -91,7 +96,8 @@ def chat_with_document(request):
 
         return Response({
             "session_id": session.id,
-            "answer": ai_response_text
+            "answer": ai_response_text,
+            "sources": source_list
         }, status=status.HTTP_200_OK)
     except Document.DoesNotExist:
         return Response({"error": "Không tìm thấy tài liệu!"}, status=status.HTTP_404_NOT_FOUND)
