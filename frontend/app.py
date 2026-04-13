@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 
+from PMMNM.frontend import chat_ui
+
 # Cấu hình đường dẫn API Backend của bạn
 BACKEND_URL = "http://127.0.0.1:8000/api"
 
@@ -83,5 +85,5 @@ if st.session_state['document_ids']:
         f"📚 Hệ thống đang ghi nhớ **{len(st.session_state['document_ids'])}** tài liệu. Đã sẵn sàng để trả lời câu hỏi!")
 else:
     st.write("*(Chưa có tài liệu nào trong bộ nhớ...)*")
-
-st.write("*(Khu vực Chat UI team FE sẽ code tiếp ở đây...)*")
+chat_ui.render_sidebar_tools()
+chat_ui.render_chat_ui()
