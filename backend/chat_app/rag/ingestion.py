@@ -124,6 +124,24 @@ def ingest_file(file_path: str, doc_id: str):
         if not chunks or len(chunks) == 0:
             return {"status": "error",
                     "msg": "Không tìm thấy nội dung văn bản nào trong tài liệu. Vui lòng kiểm tra lại chất lượng hình ảnh hoặc file tải lên!"}
+
+        # Lọc chunks quá dài (model embedding có giới hạn)
+        MAX_CHUNK_LENGTH = 512
+        filtered_chunks = []
+        for chunk in chunks:
+            if len(chunk.page_content) <= MAX_CHUNK_LENGTH:
+                filtered_chunks.append(chunk)
+            else:
+                # Tách chunk lớn thành nhiều chunk nhỏ hơn
+                content = chunk.page_content
+                for i in range(0, len(content), MAX_CHUNK_LENGTH):
+                    sub_content = content[i:i+MAX_CHUNK_LENGTH]
+                    sub_chunk = LcDocument(page_content=sub_content, metadata=chunk.metadata)
+                    filtered_chunks.append(sub_chunk)
+
+        chunks = filtered_chunks
+        print(f"✅ Processed {len(chunks)} chunks (filtered from {len(chunks)})")
+
         embeddings = OllamaEmbeddings(model=EMBEDDING_MODEL)
 
         global_save_path = os.path.join(INDEX_DIR, "global_index")

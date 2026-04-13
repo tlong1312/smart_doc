@@ -23,7 +23,10 @@ class ChatSession(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Session for {self.document.file_name}"
+        docs = self.documents.all()
+        if docs.exists():
+            return f"Session with {docs.count()} document(s)"
+        return "Empty Session"
 
 class ChatMessage(models.Model):
     SENDER_CHOICES = (

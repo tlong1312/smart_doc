@@ -1,531 +1,187 @@
-=== KẾT QUẢ ĐỌC FILE: chuong_2_FS0Go3O.docx ===
+=== KẾT QUẢ ĐỌC FILE: J2EE_ôn_tập.docx ===
 
 --- TRANG 1 ---
-Chương 2: Quy luật và nguyên tắc quản lý Nhà nước về kinh tế
+Chào bạn, để đáp ứng yêu cầu "đầy đủ lý thuyết" giúp bạn tự tin xử lý mọi câu hỏi tự luận từ cơ bản đến nâng cao, đây là bản Hệ thống lý thuyết toàn diện học phần J2EE & Spring Framework.
 
- 2.1. Quy luật
 
-2.1.1. Định nghĩa về quy luật
 
-- Định nghĩa về quy luật nói chung: 
+🟢 PHẦN 1: J2EE & JSP (NỀN TẢNG)
 
-    Quy luật là mối liên hệ nhân quả, bản chất, tất nhiên, phổ biến, bền vững, lặp đi lặp lại trong các sự vật và hiện tượng khi những điều kiện tồn tại của nó vẫn còn.
+1.1. JSP (JavaServer Pages)
 
-    Ví dụ: khi còn sức hút của trái đất thì ta tung một vật lên nó sẽ rơi xuống trái đất.
+Định nghĩa: Là công nghệ phía Server giúp tạo trang web động. JSP kết hợp mã HTML với các thẻ Java. Khi thực thi, Web Container sẽ biên dịch JSP thành một Servlet.
 
-- Định nghĩa về quy luật kinh tế:
+Các loại thẻ JSP (Directives & Scripting):
 
-   Quy luật kinh tế là mối liên hệ nhân quả, bản chất, phổ biến, tồn tại trong các hiện tượng kinh tế ở những thời điểm nhất định khi điều kiện tồn tại của nó vẫn còn.
+<%@ ... %> (Directive): Cấu hình trang (import thư viện, định nghĩa kiểu nội dung).
 
-    Ví dụ: khi có sản xuất hàng hoá thi có quy luật giá trị hoạt động. Hoặc có cơ chế thị trường thì có quy luật cạnh tranh.
+<% ... %> (Scriptlet): Chứa mã Java thực thi logic.
 
-2.1.2. Tính khách quan của các quy luật
+<%= ... %> (Expression): Xuất dữ liệu trực tiếp ra HTML.
 
-- Con người không thể tạo ra, bỏ đi hay thay thế các quy luật khách quan.
+Đối tượng ẩn (Implicit Objects): request (nhận dữ liệu), response (phản hồi), session (lưu phiên làm việc), application (dữ liệu dùng chung toàn ứng dụng).
 
-• Kết quả hoạt động của các quy luật không tuỳ thuộc vào ý muốn của con người.
+1.2. Cơ chế Giỏ hàng (Shopping Cart)
 
-- Thừa nhận tính khách quan của các quy luật không có nghĩa là phủ nhận vai trò tích cực của con người. Con người không thể tạo ra quy luật, nhưng con người hoàn toàn có thể nhận biết quy luật và vận dụng nó trong hoạt động thực tiễn.
+Sử dụng Session để lưu trữ trạng thái vì HTTP là giao thức không trạng thái (stateless).
 
-2.1.3. Đặc điểm của các quy luật kinh tế
+Quy trình: Khi "Add to Cart", Server lấy ID sản phẩm -> Kiểm tra giỏ hàng trong Session -> Cập nhật số lượng hoặc thêm mới vào List/Map -> Lưu lại vào Session.
 
-2.2.3.1. Các quy luật kinh tế hoạt động và tồn tại thông qua hoạt động của con người
 
-    Nếu như các quy luật tự nhiên xuất hiện trước khi có xã hội loài người, có thể hoạt động không phụ thuộc vào con người và bên ngoài hoạt động của con người, thì các quy luật kinh tế chỉ có thể hoạt động thông qua hoạt động của các nhóm người trong xã hội.
 
-    Vì các quy luật kinh tế chỉ hoạt động thông qua hoạt động của con người, tiên chúng liên quan chặt chẽ với các lợi ích của con người trong khi các quy luật tự nhiên hoạt động độc lập với đời sống con người và lợi ích của họ. Các lợi ích kinh tế là động lực chủ yếu thúc đẩy hoạt động sản xuất của con người.
+🔵 PHẦN 2: SPRING FRAMEWORK 6.X (CỐT LÕI)
 
-    Nếu trong tự nhiên, các lực lượng mù quáng, vô ý thức hoạt động, thì trong đời sống con người lại hoạt động một cách tự giác thực hiện những mục đích đã đề ra. Nhìn bề ngoài, thường người ta cảm thấy dường như hoạt động kinh tế của con người không phụ thuộc vào các quy luật kinh tế, con người tuỳ ý đề ra bất cứ quyết định nào; thực ra, hoạt động con người không phải tuỳ ý mà do các quy luật kinh tế quy định.
+2.1. Inversion of Control (IoC) & Dependency Injection (DI)
 
-2.2.3.2. Trong hoạt động kinh tế, mối liên hệ qua lại và phục thuộc lẫn nhau giữa nguyên nhân và kết quả phức tạp và xa xôi hơn.
+IoC: Là nguyên lý chuyển quyền quản lý đối tượng từ lập trình viên sang Framework (Spring Container).
 
-    Trong cuộc sống kinh tế, mối liên hệ qua lại và sự phụ thuộc lẫn nhau giữa nguyên nhân và kết quả phức tạp và xa xôi hơn. Ở đây không thể luôn luôn phát hiện ngay được sự vi phạm các quy luật kinh tế, Hậu quả của sự vi phạm này xa xôi hơn nhưng không kém phần nguy hại. Tính phức tạp trong việc nhận thức và vận dụng quy luật là ở đó.
+DI: Là phương pháp thực hiện IoC. Spring "tiêm" các phụ thuộc vào class.
 
-2.2.3.3. Các quy luật kinh tế kém bền vững hơn so với các quy luật tự nhiên
+Constructor Injection: Tiêm qua hàm tạo (An toàn nhất, hỗ trợ biến final).
 
-    Tuyệt đại đa số các quy luật kinh tế, nhất là các quy luật kinh tế đặc thù, chỉ hoạt động trong giới hạn của một hình thái kinh tế - xã hội. Còn các quy luật tự nhiên không gắn với sự quá độ từ một phương thức sản xuất này sang một phương thức sản xuất khác.
+Setter Injection: Tiêm qua hàm set (Dùng cho phụ thuộc tùy chọn).
 
-    Khi vận dụng các quy luật kinh tế phải tính đến giai đoạn phát triển hiện tại của nền kinh tế, bởi vì các quy luật kinh tế thể hiện sự hoạt động của mình thông qua các hình thức và quá trình kinh tế cụ thể mà người ta gặp phải rất nhiều trong thực tiễn, như: các sản phẩm, thu nhập, tiền lương vv... Những yếu tố tác động đến hình thức biểu hiện các quy luật rất nhiều, sau đây là một số yếu tố có tính chất nguyên tắc:
+Field Injection: Dùng @Autowired trực tiếp (Nhanh nhưng khó test).
 
-- Trình độ phát triển của lực lượng sản xuất. 
+2.2. Spring Bean & Scopes
 
-- Mức độ phát triển của quan hệ sản xuất.
+Bean: Là đối tượng được Spring Container khởi tạo và quản lý.
 
-    Điều kiện của đất nước (điều kiện lịch sử, tài nguyên thiên nhiên).
+Scopes (Phạm vi):
 
-- Trạng thái của ý thức xã hội (trình độ cán bộ). 
+Singleton (Mặc định): Chỉ có 1 instance duy nhất cho toàn bộ ứng dụng.
 
-- Hoàn cảnh quốc tế.
+Prototype: Tạo mới instance mỗi khi được yêu cầu.
 
-    Cho nên vấn đề lựa chọn các hình thức biểu hiện của quy luật có ý nghĩa rất quan trọng.
+Request/Session: Tồn tại theo một yêu cầu HTTP hoặc một phiên làm việc.
 
-+ Làm sao cho các hình thức được lựa chọn phản ánh đúng đắn bản chất của các quy luật kinh tế. Điều cần chú ý là: các quy luật kinh tế có liên quan chặt chẽ với nhau và tạo thành hệ thống, cho nên một hình thức biểu hiện nào đó được lựa chọn thì không phải là sự biểu hiện của một quy luật riêng lẻ nào mà là của một số quy luật kinh tế. Vì thế, khi lựa chọn các hình thức biểu hiện của quy luật kinh tế, không thể lựa chọn một cách ngẫu nhiên và tách rời nhau.
+2.3. Vòng đời của Bean (Bean Lifecycle)
 
-+ Làm sao cho các hình thức biểu hiện của các quy luật kinh tế phù hợp với đặc điểm phát triển của nền kinh tế quốc dân trong những điều kiện lịch sử của đất nước, Cần chú ý là mỗi quy luật có bản chất nhất định của nó, nhưng các hình thức thể hiện của nó rất khác nhau. Điều đó có ý nghĩa là con người có thể sử dụng các phương pháp và phương tiện khác nhau để vận dụng các quy luật kinh tế. Không có hình thức và phương pháp nào đều tốt như nhau đối với mọi điều kiện. Song, các phương pháp và các hình thức có sự kế thừa nhất định. Vì thế, điều rất quan trọng là nghiên cứu và tổng kết những kinh nghiệm thực tiễn đã tích luỹ được, gạt bỏ những phương pháp đã lỗi thời, sử dụng những phương pháp mới có hiệu quả hơn. Việc hoàn thiện các hình thức và các phương pháp vận dụng các quy luật kinh tế kông phẺi là biện pháp một lần mà là một quá 
+Instantiate: Khởi tạo đối tượng.
 
-2.2.3.4. Các quy luật kinh tế hoạt động trong mối liên hệ ràng buộc lẫn nhau, hỗ trợ và thúc đẩy lẫn nhau đi theo một hướng do quy luật kinh tế cơ bản quy định
+Populate Properties: Tiêm phụ thuộc (DI).
 
-    Việc nhận thức các quy luật kinh tế trong hệ thống của chúng cho phép làm sáng tỏ cơ chế hoạt động của các quy luật kinh tế, điều này rất quan trọng để quy định hình thức vận dụng chúng.
+Aware Interfaces: Nhận biết các tài nguyên của Spring (BeanName, BeanFactory).
 
-    Hệ thống các quy luật kinh tế có hạt nhân của nó dưới dạng kinh tế cơ bản của hình thái kinh tế - xã hội, biểu hiện bản chất của hình thái đó, quan hệ sản xuất cơ bản của nó. Bản chất của quan hệ sản xuất cơ bản của một hình thái kinh tế - xã hội nhất định đóng dấu ấn của nó trên tất cả các quan hệ khác, vì thế, quy luật kinh tế  cơ bản xác định bản chất và tinh thần hoạt động của các quy luật khác.
+BeanPostProcessor: Xử lý trước và sau khi khởi tạo.
 
-    Như vậy, các quy luật kinh tế không thể hoạt động như là những quy luật của các lực lượng có hướng khác nhau và dẫn đến sự xung đột lẫn nhau, hoạt động theo những phương thức khác nhau. Mọi quy luật hoạt động theo một hướng chung do quy luật cơ bản đề ra. Vì thế, khi đánh giá hoạt động của các quy luật kinh tế, trước hết cần chú ý đến mối liên hệ của chúng với quy luật kinh tế cơ bản của hình thái kinh tế - xã hội.
+Initialization: Gọi hàm @PostConstruct hoặc afterPropertiesSet().
 
-    Nền kinh tế quốc dân được phát triển trong môi trường tự nhiên nhất định cũng như gắn với thượng tầng kiến trúc nhất định. Vì thế, cần phải nghiên cứu các quy luật kinh tế trong sự tác động qua lại của chúng với quy luật tự nhiên và các quy luật của những quan hệ thượng tầng.
+Ready: Bean sẵn sàng hoạt động.
 
-    Điều này có liên quan đến việc các cơ quan quản lý cần chú ý đến những dự trù nguyên liệu trên mặt đất và dưới lòng đất khi phân bổ lực lượng sản xuất theo lãnh thổ, xác định các luồng vận tải, sự di chuyển các nguồn lao động, sự biến động của năng suất lao động mà đề ra những biện pháp nhất định hướng vào việc tái sản xuất những loại nguyên liệu được tái sinh, việc sử dụng đầy đủ nhất và thu hồi những nguyên liệu chưa được tái sinh. Mặt khác, trong việc hoàn thiện kỹ thuật, phải có kiến thức sâu về thành tựu khoa học và kỹ thuật, và có nhãn quan kinh tế rộng.
+Destruction: Gọi hàm @PreDestroy trước khi container đóng.
 
-    Như trên đã nói, nền kinh tế quốc dân được phát triển trong những điều kiện xã hội nhất định. Vì thế, cần nghiên cứu quy luật kinh tế trong sự tác động qua lại của chúng với các quy luật của những quan hệ thượng tầng kiến trúc. Tính chất và quá trình phát triển của thượng tầng do hạ tầng cơ sở quyết định. Nhưng các quan hệ thượng tầng trong phạm vị một hình thái kinh tế - xã hội nhất định có tính độc lập tương đối của nó, có lôgíc phát triển khách quan của nó và ảnh hưởng quan trọng đến hạ tầng cơ sở. Để sử dụng có hiệu quả sức mạnh của sự tác động ngược lại của quan hệ thượng tầng đến kinh tế, cần thiết phải nghiên cứu những quan hệ này; đánh giá ý nghĩa của chúng như là các lực lượng xã hội, xác lập suy luận phát triển của chúng và phương pháp vận dụng chúng trong lãnh đạo xã hội nói chung và lãnh đạo kinh tế nói riêng. Việc nghiên cứu các quy luật phát hiện cơ chế hoạt động của chúng và việc xác định những hình thức và phương pháp vận dụng chúng là rất cấp bách nhưng còn phải tuỳ điều kiện phát triển của xã hội.
 
-2.2.3.5. Các quy luật kinh tế hoạt động có liên quan đến cơ chế quản lý kinh tế
 
-    Nếu cơ chế quản lý có kế hoạch thì các quy luật hoạt động một cách tự giác.
+🟡 PHẦN 3: SPRING BOOT 3.X
 
-    Ví dụ: khi Nhà nước muốn đảm bảo được chỉ tiêu xuất khẩu gạo theo kế hoạch cùng với tăng giá phải có một số chính sách khuyến khích thì nông dân sẽ bán gạo cho Nhà nước một cách tự nguyện mà không cần phải sử dụng các biện pháp mệnh lệnh khác.
+Mục tiêu: Đơn giản hóa cấu hình (Opinionated), giúp tạo ứng dụng Standalone có thể chạy ngay (với lệnh java -jar).
 
-    Nếu cơ chế quản lý tự do không có kế hoạch thì các quy luật sẽ hoạt động một cách tự phát và rất dễ gây cho nền kinh tế bất ổn.
+Auto-configuration: Tự động cấu hình các Bean dựa trên các thư viện (starter) có trong Classpath.
 
-    Ví dụ: khi Nhà nước đề ra các chính sách quản lý mà không tính đến sự tác động của quy luật khách quan sẽ làm cho nền kinh tế lộn xộn.
+Starter Projects: Các gói phụ thuộc gom sẵn (vd: spring-boot-starter-web) giúp quản lý dependency dễ dàng hơn.
 
-    Tuy nhiên, tính tự giác và tính tự phát không làm giảm tính khách quan của quy luật.
+Embedded Server: Tích hợp sẵn Server (thường là Tomcat) vào bên trong file JAR, không cần cài server rời.
 
-2.1.4. Cơ chế vận dụng các quy luật
 
-a/ Khái niệm về cơ chế vận dụng quy luật
 
-    Cơ chế vận dụng quy luật là một quá trình bao gồm từ khâu nhận thức quy luật đến tạo điều kiện và kết hợp hài hoà các lợi ích trong xã hội làm cho các quy luật phát huy tác dụng.
+🟠 PHẦN 4: THAO TÁC DỮ LIỆU (JPA & SPRING DATA JPA)
 
-b/ Cơ chế vận dụng quy luật gồm cả những đặc điểm sau:
+ORM (Object-Relational Mapping): Kỹ thuật ánh xạ dữ liệu từ Database sang đối tượng Java.
 
-- Tính bao quát toàn diện và phục vụ cho việc vận dụng tổng hợp các loại quy luật khách quan trong quản lý kinh tế, trong đó các quy luật kinh tế giữ vai trò quyết định đối với sự phát triển kinh tế.
+JPQL (Java Persistence Query Language): Truy vấn dựa trên các lớp Entity. (Vd: SELECT u FROM User u).
 
-- Tính thống nhất trong cả nền kinh tế trong phạm vi cả nước và trong mỗi lĩnh vực hoạt động kinh tế, trong mọi cấp và mọi thành phần kinh tế.
+Native Query: SQL thuần túy của từng hệ quản trị DB (MySQL, Oracle). Dùng khi cần tối ưu hiệu năng hoặc xử lý logic đặc thù mà JPQL không hỗ trợ.
 
-- Tính đồng bộ nhịp nhàng ăn khớp giữa các yếu tố hợp thành cơ chế thống nhất gắn liền với hạch toán kinh tế và các đòn bẩy khuyến khích kinh tế.
+Fetch Type:
 
-- Tính khoa học và tính cách mạng kết hợp với nhau trong việc xây dựng, hoàn thiện và vận dụng cơ chế trong thực hiện quản lý kinh tế. Nó chứa đựng khả năng phát hiện đấu tranh và loại trừ những yếu tố quan liêu trì trệ cản trở ngay khi chúng bắt đầu phát sinh và thu hút những thành tựu mới của các ngành khoa học và kỹ thuật để bổ sung và hoàn thiện cơ chế.
+LAZY: Trì hoãn việc tải dữ liệu liên quan cho đến khi được truy cập (Tối ưu bộ nhớ).
 
-c/ Nội dung của cơ chế vận dụng quy luật
+EAGER: Tải tất cả dữ liệu liên quan ngay lập tức.
 
-- Phải nhận biết được quy luật
+Quan hệ: @OneToMany (1-N), @ManyToOne (N-1), @ManyToMany (N-N).
 
-    Nhận biết quy luật tức là phải nắm được nội dung của quy luật, nắm được các mối liên hệ bản chất và sự biểu hiện của các quy luật. Có 2 cách nhận biết quy luật:
 
-    Cách thứ nhất: Nhận biết quy luật bằng kinh nghiệm. Theo cách này, việc nhận biết quy luật diễn ra lâu dài mà khả năng vận dụng lại không rộng rãi, sâu sắc.
 
-    Ví dụ: Người Ấn Độ biết dùng thuyền độc mộc để đi trên sông nước và muốn đi nhanh phải làm mũi thuyền nhọn, muốn chở được nhiều phải đục cây gỗ lớn. Nhưng phải hàng trăm năm sau Acsimet mới phát hiện ra định luật sức đẩy của nước và từ đó mới chế tạo được những con tàu chở hàng nghìn tấn.
+🔴 PHẦN 5: SPRING WEB & RESTFUL API
 
-    Cách thứ hai: Là nhận biết quy luật bằng hệ thống lý luận khoa học và bằng những phương tiện khoa học kỹ thuật hiện đại sẽ nhanh chóng hơn và mở ra phạm vi ứng dụng quy luật rộng rãi và sâu sắc hơn.
+Quy trình Request: DispatcherServlet -> HandlerMapping -> Controller -> Service -> Repository -> Trả về View/Data.
 
-    Chẳng hạn, với việc sử dụng những công cụ hiện đại, ngày nay người ta đã giải mã được 98% lượng gen của con người. Như vậy việc vận dụng thành quả này là cực kỳ to lớn trong đời sống nhân loại, chắc chắn sẽ tạo ra những bước đột biến trong nông nghiệp và trong công tác chăm sóc sức khoẻ con người.
+Annotation:
 
-- Tổ chức các điều kiện chủ quan của hệ thống để cho hệ thống xuất hiện các điều kiện khách quan mà nhờ đó, quy luật phát sinh tác dụng.
+@Controller: Trả về giao diện (HTML/JSP).
 
-    Chẳng hạn, để cho các quy luật của thị trường như cạnh tranh, giá trị, cung cầu phát huy tác dụng, các cơ quan quản lý vĩ mô của Nhà nước phải soát xét lại các chức năng của mình để tạo điều kiện môi trường thuận lợi cho các doanh nghiệp hoạt động đúng với quy luật.
+@RestController: Trả về dữ liệu thô (thường là JSON).
 
-- Tổ chức thu thập các thông tin sai phạm ách tắc do việc không tuân thủ các đòi hỏi của các quy luật khách quan gây ra. Từ đó đưa ra các quyết định nhằm điều chỉnh sự hoạt động của nền kinh tế làm cho các quy luật hoạt động đúng với bản chất vốn có của nó.
+@PathVariable: Lấy giá trị trên đường dẫn URL (/users/{id}).
 
-2.1.5. Phân loại các quy luật
+@RequestParam: Lấy tham số sau dấu hỏi (?name=An).
 
-    Nếu xét theo lĩnh vực thì có thể chia thành các loại quy luật sau:
+@RequestBody: Chuyển đổi nội dung JSON từ Request Body sang đối tượng Java.
 
-a/ Các quy luật kinh tế
+HATEOAS: Cung cấp các đường link hướng dẫn trong phản hồi để Client biết các thao tác tiếp theo (vd: link tới trang sau, link xóa...).
 
-- Quy luật giá trị là quy luật cơ bản của nền kinh tế hàng hoá. Trong nền kinh tế hàng hoá đều phải dựa vào giá trị của hàng hoá. Giá trị của hàng hoá biểu hiện trên thị trường là giá cả thị trường, mà giá cả thị trường là một nhân tố của cơ chế điều tiết nền kinh tế.
 
-- Quy luật cung cầu (cùng với quy luật giá trị) là một nhân tố trong cơ chế thị trường. Chính giá cả tăng lên làm cho cầu về sản phẩm hàng hoá giảm đi nhưng cung về hàng hoá đó lại tăng lên. Ngược lại, giá cả giảm xuống sẽ làm cho cầu tăng lên và cung giảm xuống. Cứ như vậy, sự vận dụng của cung cầu sẽ điều tiết giá cả thị trường.
 
-- Quy luật cạnh tranh là một trong những quy luật vốn có của cơ chế thị trường. Quy luật này buộc các nhà doanh nghiệp muốn tồn tại và phát triển phải luôn luôn cố gắng cải tiến sản phẩm, hạ giá thành và phục vụ tốt hơn nhu cầu của khách hàng. Kết quả của quy luật cạnh tranh là làm cho hàng hoá thêm phong phú, chất lượng ngày càng cao và giá cả ngày một hạ.
+🏗️ PHẦN 6: HỆ THỐNG TIN NHẮN (RABBITMQ & KAFKA)
 
-b/ Các quy luật tâm lý xã hội 
+Đặc điểm
 
-- Quy luật về tính khí của con người là một thuộc tính tấm lý của con người, gắn liền với hệ thần kinh. Nó được biểu hiện thành những hành vị cử chỉ của con người hàng ngày. Tính khí của con người được chia làm 4 loại: tính khí nóng, tính khí lạnh, tính khí hoạt và tính khí ưu tư.
+RabbitMQ
 
-Quy luật về nhu cầu
+Apache Kafka
 
-    Nhu cầu là sự thiếu thốn về một cái gì đó mong muốn được đáp ứng. Hoặc cũng có thể nói nhu cầu là sự mất cân bằng về mặt sinh lý. Nhu cầu là nguyên nhân sinh ra động cơ hoạt động của con người, mọi hoạt động của con người là nhằm để thoả mãn một nhu cầu nào đó. Nhu cầu của con người ngày một tăng lên không ngừng.
+Giao thức
 
-    Có nhiều loại nhu cầu: nhu cầu vật chất, nhu cầu tinh thân, nhu cầu tự thể hiện mình v.v...
+AMQP (Tin cậy cao).
 
-Quy luật về lợi ích
+Distributed Log (Thông lượng lớn).
 
-Lợi ích là sự vận động tự giác, chủ quan của con người nhằm thoả mãn một nhu cầu nào đó của con người. Các quy luật về lợi ích là:
+Cơ chế
 
-- Quan tâm lợi ích trước mắt hơn là lợi ích lâu dài. 
+Exchange -> Routing Key -> Queue.
 
-- Quan tâm lợi ích vật chất hơn lợi ích tinh thần. 
+Topic -> Partition -> Offset.
 
-- Quan tâm lợi ích cá nhân hơn lợi ích tập thể.
+Lưu trữ
 
-c/ Các quy luật mang tính tổng quát
+Xóa tin nhắn ngay sau khi nhận.
 
-- Quy luật quan hệ sản xuất phải phù hợp với tính chất và trình độ của lực lượng sản xuất.
+Lưu trữ lâu dài, có thể đọc lại (Replay).
 
-    Sản xuất đòi hỏi con người nhất thiết phải có quan hệ với tự nhiên và quan hệ với nhau. Hai loại quan hệ đó hình thành lực lượng sản xuất và quan hệ sản xuất.
+Sử dụng
 
-    Lực lượng sản xuất bao gồm: tư liệu sản xuất và người lao động cùng với kinh nghiệm và thói quen của họ.
+Xử lý đơn hàng, thông báo.
 
-    Còn quan hệ sản xuất bao gồm: quan hệ sở hữu, quan hệ quản lý và quan hệ trong phân phối.
+Big Data, Log Aggregation, Real-time.
 
-    Tính quy luật là quan hệ sản xuất phải luôn luôn phù hợp với tính chất và trình độ của lực lượng sản xuất. Khi lực lượng sản xuất phát triển thì sẽ phá về quan hệ sản xuất cũ và hình thành quan hệ sản xuất mới cao hơn.
 
-- Quy luật các quốc gia đều có mục tiêu phát triển kinh tế: dân giàu, nước mạnh để đảm bảo độc lập tự chủ về đường lối và chủ quyền lãnh thổ.
 
-    Đây là một quy luật kinh tế tổng quát của sự phát triển của mọi quốc gia thời nay. Nó cũng là quy luật chi phối mọi đường lối chủ trương của mỗi nước, lệ thuộc vào các nhà lãnh đạo của từng nước. Chính quy luật này đang chi phối vận mệnh của nhân loại, đó là cùng tồn tại và phát triển, trong hoà bình trong hội nhập khu vực và quốc tế; hay là mâm mống của bạo lực chiến tranh, của xâm lược và chống xâm lược.
+🤖 PHẦN 7: SPRING AI (HIỆN ĐẠI)
 
-- Quy luật về sự phân hoá xã hội. Đây là quy luật phát triển không đồng đều đối với mọi quốc gia đi theo cơ chế kinh tế thị trường. Một xã hội không có sự chênh lệch về thu nhập, về kết quả hoạt động của con người làm việc tạo ra thì xã hội sẽ không có động lực, nhưng nếu sự chênh lệch đẩy tới mức phi lý thì trở thành những mâu thuẫn và rất dễ đổ về. Do vậy, các nhà quản lý quốc gia phải luôn ứng dụng các quy huật tạo ra các chính sách nhằm bảo đảm công bằng hợp lý nhưng lại luôn luôn tạo ra động lực cho xã hội phát triển.
+Khái niệm: Một dự án của Spring giúp tích hợp LLM (OpenAI, Gemini...) một cách chuẩn hóa thông qua các Interface như ChatModel.
 
-2.1.6. Cơ chế quản lý kinh tế
+Mô hình RAG (Retrieval-Augmented Generation):
 
-a/ Định nghĩa
+Dữ liệu nội bộ được chuyển thành Vector (Embeddings).
 
-    Cơ chế quản lý kinh tế là phương thức điều hành có kế hoạch nền kinh tế, dựa trên cơ sở các đòi hỏi của các quy luật khách quan của sự phát triển xã hội, bao gồm tổng thể các phương pháp, các hình thức, các thủ thuật để thực hiện yêu cầu của các quy luật khách quan ấy.
+Lưu vào Vector Database.
 
-b/ Nội dung của cơ chế quản lý kinh tế
+Khi người dùng hỏi, hệ thống tìm dữ liệu liên quan nhất trong Vector DB rồi mới gửi cho AI trả lời. Giúp AI trả lời chính xác thông tin thực tế của doanh nghiệp.
 
-- Phân tích thực trạng nền kinh tế, từ đó xác định đường lối, chủ trương, chiến lược phát triển.
 
-- Xác định cơ cấu của nền kinh tế bao gồm cơ cấu sản xuất (hình thức sản xuất), cơ cấu tổ chức và cơ cấu quản lý đảm bảo tính hoàn chỉnh cho hệ thống kinh tế nhằm loại bỏ các tiêu cực xã hội.
 
-- Xây dựng hệ thống kế hoạch bao gồm kế hoạch định hướng của Nhà nước, kế hoạch sản xuất - kinh doanh của các doanh nghiệp.
+📑 PHẦN 8: CÁC CÂU HỎI LÝ THUYẾT TRỌNG TÂM (FAQs)
 
-- Làm trong sạch và có hiệu lực bộ máy quản lý và cán bộ công chức của bộ máy quản lý.
+Phân biệt @Primary và @Qualifier?
 
-- Thực hiện đúng các nguyên lý điều khiển (thể hiện thành các nguyên tắc quản lý) hình thành các quy tắc, các ràng buộc về hành vi (định mức, tiêu chuẩn, chế độ, luật pháp, điều lệ) bắt buộc các cấp, các ngành, các đơn vị và các cá nhân phải tuân thủ.
+@Primary đánh dấu Bean ưu tiên mặc định. @Qualifier dùng để chỉ đích danh tên Bean cụ thể khi tiêm.
 
-- Ban hành các chính sách kinh tế, xã hội (nhất là các chính sách đòn bẩy kinh tế, kích thích thi đua).
+Tại sao Spring Boot không cần file web.xml?
 
-- Lựa chọn các phương pháp quản lý thích hợp.
+Vì nó sử dụng cấu hình Java (@Configuration) và cơ chế Auto-configuration để tự động đăng ký các Servlet/Filter.
 
-c/ Động lực của cơ chế quản lý kinh tế
+Lợi ích của Spring Data JPA?
 
-- Khái niệm: là những tác động tích cực của chủ thể quản lý mà nhờ đó có thể thống nhất được hành vi của cả hệ thống, đưa hệ thống đạt đến mục tiêu quản lý trong một thời hạn ngắn nhất.
-
-- Các tác động tích cực có thể là: 
-
-+ Trong nội bộ chủ thể quản lý. 
-
-+ Trong từng phân hệ và từng phần tử bị quản lý. 
-
-+ Từ môi trường bên ngoài tác động vào.
-
-- Các yếu tố hình thành động lực: 
-
-+ Sự đúng đắn của mục tiêu quản lý. 
-
-+ Tính gương mẫu của các chủ thể quản lý. 
-
-+ Cấu trúc của hệ thống hợp lý tạo được tính ưu việt.
-
-+ Giải quyết đúng đắn mối quan hệ giữa bên trong và bên ngoài.
-
-+Phát huy được các yếu tố phi kinh tế như đạo đức, tâm lý, tác phong, thói quen của con người để tiến tới sự thống nhất hành vi của cả hệ thống.
-
-+ Giải quyết sự công bằng hợp lý các lợi ích xã hội, đây chính là động lực cơ bản của sự phát triển hệ thống kinh tế.
-
-    Đổi mới các yếu tố trên chính là nội dung của đổi mới cơ chế quản lý kinh tế.
-
-d/ Chức năng của cơ chế quản lý kinh tế
-
-    Chức năng của cơ chế quản lý kinh tế là duy trì trạng thái cân bằng của nền kinh tế và đưa nền kinh tế phát triển lên những bước cao hơn. Cụ thể là:
-
-- Củng cố và hoàn thiện dần các quan hệ sở hữu trong nền kinh tế.
-
-- Làm cho quan hệ sản xuất phù hợp với trình độ và tính chất của lực lượng sản xuất.
-
-- Làm cho lực lượng sản xuất phát triển, đưa khoa học - kỹ thuật vào cuộc sống, mở rộng quan hệ đối ngoại, tập hợp được sức mạnh quần chúng (bài học lấy dân làm gốc).
-
-- Hoàn thiện kiến trúc thượng tầng xã hội, bảo đảm giữ vững kỷ cương pháp luật Nhà nước, sự công bằng và sự trong sạch xã hội.
-
-
-
-2.2. Các nguyên tắc quản lý của Nhà nước về kinh tế
-
-    Việc nghiên cứu các quy luật khách quan giúp cho các cơ quan quản lý nhà nước về kinh tế tìm được các nguyên tắc quản lý hợp lý và đúng đắn theo từng giai đoạn phát triển của đất nước.
-
-2.2.1. Định nghĩa nguyên tắc quản lý Nhà nước về kinh tế
-
-    Các nguyên tắc quản lý nhà nước về kinh tế là các quy tắc chỉ đạo, những tiêu chuẩn hành vi mà các cơ quan quản lý nhà nước phải tuân thủ trong quá trình quản lý kinh tế.  
-
-2.2.2.Yêu cầu đối với nguyên tắc quản lý kinh tế của Nhà nước
-
-Yêu cầu của các nguyên tắc quản lý kinh tế, các nguyên tắc quản lý kinh tế do con người đặt ra nhưng không phải do sự suy nghĩ chủ quan mà phải tuân thủ các đòi hỏi khách quan của quy luật:
-
-- Các nguyên tắc phải phù hợp với mục tiêu của quản lý.
-
-- Các nguyên tắc phải phản ánh đúng tính chất và các quan hệ quản lý.
-
-- Các nguyên tắc quản lý phải bảo đảm tính hệ thống, tính nhất quán và phải được bảo đảm bằng pháp luật.
-
-    Các nguyên tắc quản lý kinh tế phản ánh các yêu cầu khách quan của các quy luật chi phối lên quá trình quản lý kinh tế, tức là muốn biết có nguyên tắc nào thì trước tiên phải biết có quy luật nào? 
-
-    Đây là vấn đề chưa được các nước xã hội chủ nghĩa giải đáp rõ ràng vì nó còn đang trong quá trình tìm kiếm và nhận thức. Đối với các nước tư bản chủ nghĩa, các nguyên tắc quản lý kinh tế chủ yếu là:  
-
-1) Hiệu quả, tiết kiệm và 
-
-2) Thống nhất lãnh đạo chính trị và kinh
-
-  Đối với nước ta, theo quan điểm hiện nay của Đảng, có các nguyên tắc quản lý kinh tế ở phạm vi Nhà nước là:
-
-- Thống nhất lãnh đạo chính trị và kinh tế (ưu tiên chính tri).
-
-- Tập trung dân chủ.
-
-- Kết hợp hài hòa các loại lợi ích. 
-
-- Hiệu quả, tiết kiệm.
-
-2.2.3.Các nguyên tắc quản lý kinh tế của Nhà nước
-
-2.2.3.1. Thống nhất lãnh đạo chính trị và kinh tế
-
-    Thống nhất lãnh đạo chính trị và kinh tế, bảo đảm quan hệ đúng đắn giữa kinh tế và chính trị và tạo được động lực cùng chiều cho mọi người dân trong xã hội là một trong những nguyên tắc cơ bản của việc quản lý kinh tế có căn cứ. khoa học trong phạm vi quốc gia.
-
-    Phát triển luận điểm của C.Mác và F.Ăng-ghen về sự tương quan giữa chính trị và kinh tế, V.I.Lê-nin đã xác định sự thống nhất biện chứng và sự tác động qua lại giữa hai phạm vi hoạt động của con người, đó là chính trị và kinh tế.
-
-    Chính trị là lĩnh vực của những quan hệ nhất định trong xã hội diễn ra như là hoạt động có ý thức của con người. Đó là một hình thức nhận thức xã hội phản ánh mức độ lớn nhất của các quan hệ kinh tế của con người. Ngoài những yếu tố khách quan, chính trị bao gồm cả yếu tố chủ quan. Chính trị là tổng thể các quan điểm, các phương pháp hoạt động thực tế nhất định của Đảng, của Nhà nước, của giai cấp mà mấu chốt là vấn đề chính quyền. 
-
-    Trong xã hội tư sản có hai thứ chính trị đối lập với nhau: chính trị của Nhà nước tư bản, chính trị của giai cấp công nhân do Đảng Cộng sản lãnh đạo. Mối quan hệ và tác động qua lại giữa chính trị và kinh tế trong xã hội tư sản được thực hiện thông qua sự đấu tranh thường xuyên chống nhau giữa hai lực lượng đó. 
-
-    Dưới chế độ xã hội chủ nghĩa, không có sự phân chia về chính trị vì nhân dân là người chủ thực sự các tư liệu sản xuất, nắm quyền lực chính trị trong tay, tiến tới không có giai cấp thù địch. Nhưng vì không thể thích nghi ngay chính trị với yêu cầu kinh tế khi chưa có cơ sở kinh tế xã hội chủ nghĩa, hơn nữa việc xây dựng chủ nghĩa xã hội lại diễn ra trong sự đấu tranh ác liệt (về kinh tế, tư tưởng và chính trị) với thế lực thù địch trong nước, sự đấu tranh này bị phức tạp hoá bởi cuộc đấu tranh giai cấp trên vũ đài quốc tế, cho nên chưa thể có ngay sự thích nghi giữa chính trị và kinh tế. Theo quan điểm của V.I. Lê-nin, sự thích nghi của chính trị và kinh tế là không thể tránh khỏi nhưng không phải ngay tức khắc đã trơn tru, không phải giản đơn và trực tiếp. Trong sự nghiệp xây dựng xã hội chủ nghĩa ở nước này hay nước khác, vẫn chưa giải quyết được vấn đề thích nghi đầy đủ giữa chính trị với nhu cầu của sự phát triển kinh tế trong khuôn khổ được chấp nhận của con người.
-
-    Sự thống nhất và sự tác động khách quan lẫn nhau giữa chính trị và kinh tế được thể hiện với các đặc điểm:
-
-- Sự thống nhất và mối liên hệ lẫn nhau giữa chính trị và kinh tế không có nghĩa là sự đồng nhất giữa chúng vì đó là hai Phạm vị khác nhau của hoạt động con người tuy chúng được phát triển trong sự thống nhất và phụ thuộc lẫn nhau. Không thể nhìn thấy ngay lợi ích kinh tế trực tiếp và đầy đủ trong mọi hành động chính trị. Đôi khi muốn đạt được lợi ích kinh tế nào đó, cần có hàng loạt biện pháp chính trị quá độ. Có thể có lợi ích chính trị trong những trường hợp mà lợi ích kinh tế trực tiếp không đáng kể và được con người chấp nhận.
-
-    Trong sự thống nhất giữa chính trị và kinh tế, vai trò quyết định thuộc về kinh tế. Nhà nước xã hội chủ nghĩa giữ vai trò người cải tạo kinh tế trên cơ sở vận dụng tự giác các quy luật khách quan. Thực tế đó có thể là lý do để đánh giá cao vai trò của chính trị, để giải thích chính trị như là nhân tố quyết định so với kinh tế. Nhưng cho dù phạm vi chính trị có phức tạp chăng nữa, suy cho cùng nó bị quy định bởi các điều kiện kinh tế. Chính do các điều kiện kinh tế hiện nay tạm đủ sống mà ở các nước tư bản chủ nghĩa phong trào đấu tranh chính trị đang bị co hẹp.
-
-    Chính trị không phải là một cách thụ động thực tế kinh tế. Nó là phương tiện mạnh mẽ tác động đến các quá trình kinh tế khách quan. Sự tác động ngược lại của chính quyền Nhà nước đến sự phát triển kinh tế có ba loại: tác động cùng hướng thì sự phát triển kinh tế sẽ nhanh, tác động ngược hướng thì sự phát triển kinh tế bị kìm hãm, hoặc nó cản trở sự phát triển kinh tế trong những hướng phát triển và thúc đẩy sự phát triển kinh tế theo những hướng khác. Trong trường hợp này cuối cùng dẫn đến một trong hai trường hợp trên. Rõ ràng, trong trường hợp thứ hai và thứ ba, chính quyền có thể gây thiệt hại to lớn cho sự phát triển kinh tế, đường lối chính trị sai sẽ dẫn tới bế tắc về kinh tế.
-
-- Dưới chủ nghĩa xã hội, chính trị và kinh tế không thể tách rời nhau vì chính sách của Đảng là cơ sở mọi biện pháp lãnh đạo kinh tế, hướng dẫn sự phát triển không ngừng của nền kinh tế.
-
-- Nội dung yêu cầu) của nguyên tắc thống nhất lãnh đạo chính trị và kinh tế là:
-
-+ Phải bảo đảm sự lãnh đạo của Đảng trên mặt trận kinh tế và quản lý kinh tế. Cụ thể là: 
-
-1) Đảng phải vạch ra đường lối chủ trương phát triển kinh tế xã hội. 
-
-2) Đảng phải chỉ rõ con đường, biện pháp, thủ đoạn, phương tiện để thực hiện được đường lối chủ trương đã vạch ra, 
-
-3) Đảng phải động viên được đông đảo quần chúng, đoàn kết nhất trí thực hiện đường lối chủ trương chống nguy cơ chệch hướng xã hội chủ nghĩa và phải nắm chắc vấn đề nhân sự của bộ máy.
-
-+ Phải phát huy vai trò điều hành, quản lý của Nhà nước, Cụ thể là: 
-
-1) Nhà nước phải biến đường lối chủ trương của Đảng thành kế hoạch, chống nguy cơ tụt hậu xa hơn về kinh tế so với các nước trong khu vực và trên thế giới; 
-
-2) Nhà nước phải dùng quyền lực của mình để hoàn chỉnh hệ thống pháp luật làm cho pháp luật được thực hiện nghiêm minh; 
-
-3) Nhà nước phải chăm lo, giải quyết vấn đề cán bộ, vấn đề lao động, vấn đề việc làm và đời sống dân cư; 
-
-4) Nhà nước triển khai việc thực hiện kế hoạch do Nhà nước vạch ra; 
-
-5) Nhà nước phải kiểm tra, tổng kết việc thực hiện kế hoạch.
-
-+ Vừa phải phát triển kinh tế sản xuất, vừa phải chăm lo vấn đề an ninh quốc phòng của đất nước. Vừa đấu tranh chống nạn tham nhũng và tệ quan liêu, vừa đấu tranh chống nguy cơ diễn biến hòa bình của các thế lực thù địch.
-
-2.2.3.2. Tập trung dân chủ
-
-    Nội dung của nguyên tắc: Phải đảm bảo mối quan hệ chặt chẽ và tối ưu giữa tập trung dân chủ trong quản lý kinh tế. Tập trung phải trên cơ sở dân chủ, dân chủ phải thực hiện trong khuôn khổ tập trung.
-
-    Biểu hiện của tập trung: 
-
-1) Thông qua hệ thống kế hoạch; 
-
-2) Thông qua hệ thống pháp luật và chính sách quản lý kinh tế, 
-
-3) Thực hiện chế độ một thủ trưởng ở tất cả các đơn vị, các cấp.
-
-    Biểu hiện của dân chủ: 
-
-1) Mở rộng phạm vi trách nhiệm, quyền hạn của các cấp, phân biệt rõ chức năng quản lý kinh tế của Nhà nước và chức năng quản lý kinh doanh của các danh nghiệp; 
-
-2) Hạch toán kinh tế; 
-
-3) Chấp nhận kinh tế thị trường, chấp nhận cạnh tranh, chấp nhận mở cửa; 
-
-4) Giáo dục, bồi dưỡng trình độ kiến thức cho quần chúng; 
-
-5) Kết hợp quản lý theo ngành với quản lý theo địa phương và vùng lãnh thổ; 
-
-6) Xóa bỏ dần chế độ chủ quản, cấp hành chính chủ quản và sự phân biệt giữa xí nghiệp Trung ương và xí nghiệp địa phương.
-
-    Điều 6 Hiến pháp năm 1992 quy định: "Quốc hội, hội đồng nhân dân và các cơ quan khác của Nhà nước đều tổ chức và hoạt động theo nguyên tắc tập trung dân chủ”.
-
-    Nguyên tắc tập trung dân chủ trong tổ chức và hoạt động của bộ máy nhà nước ta thể hiện:
-
-• Các cơ quan quyền lực nhà nước đều do nhân dân bầu ra và chịu trách nhiệm trước nhân dân. Các cơ quan hành chính nhà nước, tòa án, Viện kiểm sát đều do cơ quan quyền lực nhà nước bầu ra và chịu trách nhiệm trước cơ quan bầu ra mình.
-
-• Các cơ quan nhà nước cấp dưới phải phục tùng cơ quan nhà nước cấp trên, các cấp chính quyền địa phương phải phục tùng cơ quan Trung ương.
-
-- Tăng cường quyền quản lý tập trung thống nhất của Trung ương, kết hợp chặt chẽ với việc phân cấp hợp lý, để tăng cường và phát huy tính chủ động, sáng tạo của chính quyền địa phương và cơ sở.
-
-- Thiểu số phục tùng đa số, cá nhân phục tùng tập thể, mọi người phải phục tùng người chỉ huy trong các cơ quan nhà nước tổ chức theo chế độ thủ trưởng và trong điều hành công việc ở các công sở. 
-
-    Nguyên tắc tập trung dân chủ đối lập với tập trung quan liêu, gia trưởng độc đoán. Nguyên tắc này cũng đối lập với tình trạng phân tán, cục bộ, địa phương, vô tổ chức, vô kỷ luật.
-
-2.2.3.3. Kết hợp hài hòa các loại lợi ích xã hội
-
-    Quản lý kinh tế trước hết là quản lý con người, là tổ chức mang tính tích cực lao động của người lao động. Con người có những lợi ích, những nguyện vọng và những nhu cầu nhất định. Do đó, một trong những nhiệm vụ quan trọng của quản lý là phải chú ý đến lợi ích của con người để khuyến khích làm việc có hiệu quả phát huy tính tích cực lao động của họ.
-
-- Lợi ích là sự vận động tự giác, chủ quan của con người nhằm thoả mãn nhu cầu nào đó của con người.
-
-- Lợi ích là một động lực to lớn nhằm phát huy tính tích cực, chủ động của con người.
-
-- Lợi ích là phương tiện của quản lý cho nên phải dùng nó để động viên con người.
-
-    Nội dung của nguyên tắc là phải kết hợp hài hòa 3 loại lợi ích xã hội (hoặc thu gọn hơn là lợi ích của Nhà nước), lợi ích của tập thể và lợi ích của cá nhân trên cơ sở các đòi hỏi của các quy luật khách quan.
-
-    Các biện pháp kết hợp tốt 3 loại lợi ích:
-
-- Thực hiện đường lối phát triển kinh tế đúng đắn dựa trên cơ sở vận dụng các quy luật khách quan phù hợp với đặc điểm của đất nước. Đường lối đó phản ánh lợi ích cơ bản và lâu dài của toàn xã hội, cũng tức là lợi ích của mọi thành viện xã hội.
-
-- Xây dựng và thực hiện các quy hoạch và kế hoạch chuẩn xác. Kế hoạch quy tụ quyền lực của cả hệ thống và phải có tính hiện thực cao.
-
-- Thực hiện đầy đủ chế độ hạch toán kinh tế và vận dụng đúng đắn các đòn bẩy kinh tế để quản lý một cách có hiệu quả mọi tiềm năng và cơ hội.
-
-    Người lao động, các tập thể của họ không phải chỉ có lợi ích vật chất mà còn có lợi ích tinh thần. Có những động cơ tinh thần, tư tưởng thúc đẩy hoạt động lao động của con người như: giá trị lao động của mỗi người đối với xã hội, niềm tự hào và vinh dự lao động, lương tâm lao động và nhiệt tình sản xuất, niềm vui sáng tạo, hứng thú tăng thêm kiến thức và tìm tòi, sự phấn khởi về tình cảm, sự thích thú thẩm mỹ về lao động và kết quả lao động của mình. Con người còn có những quyền lợi về chính trị, tự do, dân chủ, quyền lực hưởng thụ những giá trị, văn hóa tinh thần đo xã hội bảo đảm cho họ.
-
-    Nhận thức lợi ích chẳng qua là vạch rõ khuynh hướng của các quy luật, phạm vi cường độ tác động của chúng, chỉ khi nào các hình thức và phương pháp quản lý phù hợp với lợi ích của xã hội, của tập thể và của cá nhân thì các quy luật của chủ nghĩa xã hội mới được nhận thức đúng đắn và được vận dụng khéo léo nhằm mục đích phát triển nền kinh tế xã hội. Cho nên việc nghiên cứu lợi ích, việc thoả mãn và kết hợp chúng là cơ sở vững chắc để cải tiến các phương pháp quản lý.
-
-2.2.3.4. Nguyên tắc kết hợp quản lý theo ngành với quản lý theo địa phương và vùng lãnh thổ
-
-- Nhà nước phải có một thể chế thống nhất. Bộ máy Nhà nước được tổ chức hoạt động theo các cấp hành chính nhà nước và theo quy định là cấp dưới phải phục tùng cấp trên. Địa phương phải phục tùng Trung ương. Đó là quản lý lãnh thổ của chính quyền địa phương.
-
-- Các đơn vị thuộc các ngành kinh tế - kỹ thuật đều nằm trên một địa bàn lãnh thổ nhất định. Các đơn vị đó phải chịu sự quản lý của ngành (Bộ), đồng thời nó cũng phải chịu sự quản lý lãnh thổ của chính quyền địa phương trong một số mặt theo chế độ quy định. Hai mặt đó tạo nên sự thống nhất giữa cơ cấu kinh tế ngành với cơ cấu kinh tế lãnh thổ trong một cơ cấu kinh tế chung.
-
-    Nguyên tắc này đòi hỏi quản lý theo ngành và quản lý theo lãnh thổ phải phối hợp, gắn bó với nhau trên tất cả mọi lĩnh vực, đặc biệt là lĩnh vực kinh tế có trách nhiệm chung trong việc hoàn thành kế hoạch Nhà nước của ngành cũng như của lãnh thổ, có trách nhiệm, nghĩa vụ và quyền lợi của từng bên và của cả hai bên theo luật định.
-
-2.2.3.5. Nguyên tắc phân định và kết hợp tốt chức năng quản lý nhà nước về kinh tế với chức năng quản lý kinh doanh của các doanh nghiệp
-
-- Mục tiêu của Nhà nước là phát triển nền kinh tế quốc dân, ổn định chính trị, xã hội, tăng thu nhập quốc dân nên Nhà nước thực hiện vai trò kinh tế của mình không chỉ bằng việc quản lý khu vực kinh tế Nhà nước mà quan trọng hơn là tổ chức và quản lý toàn bộ nền kinh tế quốc dân. Để quản lý được nền kinh tế quốc dân, Nhà nước với bộ máy quản lý của mình phải thực hiện rất nhiều loại công việc khác nhau, những công việc này hình thành nên khái niệm chức năng quản lý kinh tế của Nhà nước. Vậy chức năng quản lý nhà nước về kinh tế là hình thức chỉ biểu hiện phương hướng và giai đoạn tác động có chủ đích của Nhà nước lên đối tượng và khách thể quản lý nhà nước về kinh tế; là tập hợp những nhiệm vụ khác nhau mà Nhà nước phải tiến hành trong quá trình quản lý kinh tế đất nước,
-
-    Quản lý nhà nước về kinh tế là quản lý kinh tế vĩ mô, nghĩa là quản lý toàn bộ nền kinh tế quốc dân với tính cách là một hệ thống lớn phức tạp do nhiều phân tử nhỏ hơn với cấp độ khác nhau hợp thành trong mối quan hệ tương tác. Đó là tống hế các ngành kinh tế, các vùng, các địa phương cùng các cơ sở kinh tế của chúng. Nhà nước quản lý nền kinh tế quốc dân trên quy mô toàn xã hội với việc thực hiện hàng loạt chức năng của nó.
-
-- Mục tiêu quản lý kinh doanh của doanh nghiệp:
-
-    Do mục tiêu của doanh nghiệp là thu được lợi nhuận cao nhất, ổn đinh doanh nghiệp, tăng thị phần tạo uy tín cho sản phẩm của mình, do đó doanh nghiệp thực hiện chức năng kinh doanh của mình thông qua việc tổ chức, điều hành hệ thống trong doanh nghiệp nhằm đạt tới mục tiêu đã đề ra. Do doanh nghiệp hoạt động theo cơ chế thị trường nên doanh nghiệp phải tuân theo những quy luật của thị trường tuỳ theo từng giai đoạn để có những tác động có lợi nhất cho doanh nghiệp trong kinh doanh. Vậy chức năng kinh doanh của doanh nghiệp là hình thức biểu hiện phương hướng và giai đoạn tác động có chủ đích của doanh nghiệp lên đối tượng kinh doanh của doanh nghiệp. Đó là tập hợp những nhiệm vụ khác nhau mà doanh nghiệp phải tiến hành trong quá trình sản xuất - kinh doanh của doanh nghiệp. Nói đến kinh doanh của doanh nghiệp là nói ở tầm vị mổ trong đó các mối quan hệ của doanh nghiệp trong quá trình sản xuất : kinh doanh như là bạn hàng, đầu ra, đầu vào, những doanh nghiệp có liên quan trực tiếp tới sản xuất - kinh doanh của doanh nghiệp.
-
-- Về quan hệ quản lý 
-
-    Một bên là Nhà nước với tư cách là chủ thể quản lý. Nhà nước định hướng cho sự phát triển và tạo điều kiện cho phát triển kinh tế. Nhà nước phải ngăn chặn những chiều hướng xấu có thể xảy ra cho việc hướng tới mục tiêu của mình. Do kinh tế thị trường có hai mặt, bên cạnh những ưu việt của nó còn có những khuyết tật không thể tránh khỏi, nên Nhà nước can thiệp để hạn chế tới mức thấp nhất những khuyết tật có thể xảy ra. Do đ6 Nhà nước chính là chủ thể quản lý, là những người có tác động rất lớn tới sự phát triển của nền kinh tế nói chung và doanh nghiệp nói riêng. Thực tế cho thấy trong kinh tế thị trường không thể có giới hạn chung về sự can thiệp của Nhà nước theo mọi giai đoạn. Tuỳ theo yêu cầu cụ thể mà Nhà nước có thể kiểm soát ngành này, can thiệp điều tiết lĩnh vực kia hoặc bảo trợ nâng đỡ ngành kia để đảm bảo mục tiêu kinh tế - xã hội nói chung. Nhà nước phải có thực lực kinh tế đủ mạnh thì mới can thiệp có hiệu quả. Phải xây dựng một cơ cấu tổ chức bộ máy đủ mạnh, xây dựng cơ sở hạ tầng tốt cho sự phát triển kinh tế. Nhà nước hướng các doanh nghiệp sản xuất - kinh doanh theo định hướng mà Nhà nước đã chọn. Nhà nước đảm bảo quyền tự do kinh doanh của doanh nghiệp nhưng trên cơ sở pháp luật cho phép. Vậy ta có thể thấy rằng dù ít hay nhiều trong công việc kinh doanh, Nhà nước vẫn có những can thiệp vào. Và các doanh nghiệp chính là một trong những đối tượng chủ yếu mà Nhà nước quản lý về mặt kinh tế. Ranh giới không thể lẫn lộn, một đơn vị cơ sở kinh tế dù lớn đến đâu cũng không phải là một cấp Nhà nước và ngược lại một cấp Nhà nước dù nhỏ đến đâu cũng không thể trở thành một tổ chức kinh doanh và có thể quản lý đơn vị kinh doanh đó, phải chấp hành quy định của Nhà nước.
-
-    Một bên là các doanh nghiệp với tư cách là đối tượng bị quản lý của Nhà nước. Các doanh nghiệp có thể tự do kinh doanh trên những lĩnh vực khác nhau mà pháp luật cho phép. Họ phải tiến hành quá trình kinh doanh từ khâu đầu cho đến khâu cuối, từ sản xuất sản phẩm đến việc tiêu thụ sản phẩm và thu tiền. Giám đốc (tổng giám đốc) là người chịu trách nhiệm tổ chức và điều hành bộ máy kinh doanh của doanh nghiệp, là người vạch hướng cho doanh nghiệp. Nhưng dù kinh doanh sản phẩm nào, phát triển theo hướng nào đều phải được sự cho phép của Nhà nước, Nhà nước với tư cách chủ thể quản lý đã có những tác động đến công việc kinh doanh, có thể ngăn cản, hạn chế nếu việc kinh doanh không theo định hướng hoặc làm tổn hại đến môi trường, có thể khuyến khích giúp đỡ việc kinh doanh phát triển đem lại lợi ích cho đất nước. Doanh nghiệp phải tuân theo mệnh lệnh Nhà nước ban ra, phải chịu sự quản lý của Nhà nước.
-
-- Về đối tượng quản lý
-
-    Đối tượng quản lý của Nhà nước về kinh tế là các quan hệ giữa một cơ quan có quyền lực chính trị với những tập thể đại diện cho quyền sử dụng những tài sản thuộc sở hữu toàn dân được giao phó (đất đai, biển, rừng, hầm mỏ, nhà máy); Nhà nước là người quản lý tài sản mang tính sở hữu toàn dân và đem giao cho các doanh nghiệp sử dụng. Cơ quan quản lý về kinh tế của Nhà nước tiến hành các hoạt động tổ chức trong phạm vi toàn bộ bộ máy quản lý và với toàn bộ nền kinh tế quốc dân. Thiết lập hệ thống các cơ quan nhà nước các cấp và hệ thống các tổ chức kinh tế, điều hoà bằng các biện pháp kinh tế - hành chính. Nhà nước phải thực hiện tốt công tác kiểm tra, kiểm soát đối với tất cả mọi hoạt động trong nền kinh tế quốc dân trên cơ sở đảm bảo cho các đơn vị kinh doanh thực hiện đầy đủ quyền và nghĩa vụ được pháp luật quy định. Tránh tình trạng tham ô, tham nhũng bòn rút tài sản của Nhà nước. Vai trò quản lý của Nhà nước là hướng dẫn, trọng tài, kích thích, phục vụ, kiểm tra, uốn nắn, ngăn chặn, cho phép thiết lập trong quá trình kết hợp lao động sống và lao động vật hoá dưới hình thực hiện vật, giá trị, doanh nghiệp sử dụng tài sản, vốn, kỹ thuật công nghệ trong doanh nghiệp để kinh doanh và nâng cao uy tín, phát triển doanh nghiệp. Doanh nghiệp có quyền sử dụng lợi nhuận thu được. Đối với các doanh nghiệp tư nhân, thì tài sản trong doanh nghiệp là của chủ doanh nghiệp và chủ doanh nghiệp chịu trách nhiệm với toàn bộ quá trình kinh doanh. Doanh nghiệp có quyền tự do lựa chọn nhân công, lựa chọn công nghệ cho quá trình sản xuất - kinh doanh của mình. Còn các doanh nghiệp nhà nước thì tài sản trong doanh nghiệp là thuộc quyền sở hữu của Nhà nước và chủ doanh nghiệp chỉ có quyền sử dụng tài sản đó. Các mối quan hệ của các doanh nghiệp chủ yếu là với bạn hàng của mình trong công việc kinh doanh. Mối quan hệ này diễn ra bình đẳng theo phương thức đôi bên cùng có lợi. Hình thức của các mối quan hệ này thông qua các loại hợp đồng kinh tế, hợp đồng lao động. Chủ doanh nghiệp phải là người năng động, sáng tạo, biết chớp thời cơ thì mới phát triển được doanh nghiệp của mình. Đồng thời phải nắm được thông tin, chính sách mới mà Nhà nước ban hành để vận dụng, hướng cho doanh nghiệp một hướng đi đúng, phù hợp với pháp luật. 
-
-- Về công cụ quản lý
-
-    Công cụ quản lý của Nhà nước chủ yếu là bằng pháp luật. Nhà nước chi phối tất cả các đơn vị kinh tế, ràng buộc và tạo môi trường cho tất cả hoạt động trong trật tự kỷ cương, tạo cơ sở pháp lý cho các đơn vị quản lý nội bộ và quan hệ với nhau. Hình thức chủ yếu là Nhà nước ra các văn bản quản lý nhà nước. Văn bản không chỉ phản ánh thông tin quản lý đối với các doanh nghiệp mà còn thể hiện ý chí, mệnh lệnh của các cơ quan nhà nước đối với các đối tượng quản lý. Văn bản còn là cơ sở công tác kiểm tra giám sát hoạt động của các doanh nghiệp. Kiểm tra là một khâu tất yếu để đảm bảo cho bộ máy quản lý về kinh tế hoạt động có hiệu quả. Bên cạnh đó một công cụ không kém phần quan trọng đó là sử dụng như các chính sách, các đòn bẩy kinh tế tạo điều kiện cho phát triển kinh tế. Như đã biết mọi hoạt động sản xuất - kinh doanh của các doanh nghiệp đều phải tuân theo các quy luật kinh tế khách quan. Sự chi phối của các quy luật đó đều thông qua * lợi ích kinh tế. Nhà nước vận dụng các phạm trù kinh tế, cácđòn bẩy, các chính sách để kích thích. Tác động thông qua lợi ích riêng của doanh nghiệp và đảm bảo lợi ích chung của xã hội.
-
-    Các doanh nghiệp có công cụ quản lý chủ yếu là các hợp đồng kinh tế, các kế hoạch sản xuất - kỹ thuật - tài chính, các quy trình công nghệ, quy phạm pháp luật, các phương pháp hạch toán. Do đó phải thực hiện từ các khâu lựa chọn sản phẩm sản xuất ra, lựa chọn công nghệ cho phù hợp, lựa chọn nguyên vật liệu. Muốn có được những thứ đó, doanh nghiệp phải mua từ các doanh nghiệp bạn hàng) khác, thông qua các hợp đồng kinh tế mua bán giữa đôi bên. Doanh nghiệp phải lên kế hoạch cho việc sản xuất, phải sản xuất bao nhiêu loại sản phẩm này, bao nhiêu sản phẩm kia, chất lượng kỹ thuật cần đạt được để hợp với yêu cầu của thị trường đề ra. Sản phẩm được bán ra với giá bao nhiêu, sức cạnh tranh của sản phẩm như thế nào, muốn biết về điều đó thì doanh nghiệp phải tự tìm hiểu về thị trường tiêu thụ sản phẩm. Doanh nghiệp phải hạch toán chi tiết quá trình kinh doanh xem là lỗ hay lãi để từ đó có những bước điều chỉnh cho phù hợp.
-
-- Về nguyên tắc tổ chức bộ máy
-
-    Hệ thống bộ máy nhà nước nói chung và bộ máy nhà nước quản lý về kinh tế nói riêng đều được tổ chức theo nguyên tắc tập trung dân chủ. Theo nguyên tắc này thì bộ máy nhà nước quản lý về kinh tế là cơ quan đại diện cho ý chí, nguyện vọng của nhân dân, nắm giữ tài sản của nhân dân, do nhân dân bầu ra và chịu trách nhiệm trước nhân dân. Còn cơ cấu tổ chức bộ máy quản lý nhà nước về kinh tế được phân thành nhiều cấp từ cấp cao nhất là Chính phủ, các Bộ đến cơ quan quản lý nhà nước là quan hệ. cấp trên với cấp dưới, cấp trên ra chỉ thị mệnh lệnh, cấp dưới thực hiện và đề xuất ý kiến lên cấp trên xem xét sửa đổi, và được thực hiện với nhiều cấp từ cao xuống thấp chỉ đạo theo văn bản, chỉ thị mà trên đưa xuống. Tóm lại về mặt tổ chức bộ máy quản lý nhà nước về kinh tế nhằm đảm bảo cho sự phát triển kinh tế bền vững.
-
-    Còn hệ thống bộ máy kinh doanh trong doanh nghiệp thì thông thường được phân thành một cấp. Đó là ban giám đốc doanh nghiệp mà đại diện là giám đốc chủ doanh nghiệp với tập thể người làm thuê, đó là công nhân. Chủ doanh nghiệp là người nắm giữ tài sản trong doanh nghiệp, có cả quyền sở hữu lẫn quyền sử dụng tài sản đó và chịu trách nhiệm kinh doanh trước pháp luật bằng tài sản của mình. Còn quan hệ giữa các doanh nghiệp với nhau là quan hệ bình đẳng các bên cùng có lợi và được tổ chức theo nguyên tắc hạch toán kinh tế. Chủ doanh nghiệp ra quyết định kinh doanh và hướng doanh nghiệp phát triển theo hướng đó. Để có thể sản xuất - kinh doanh họ phải thuê công nhân, mua máy móc thiết bị, mua nguyên vật liệu để cho công nhận sản xuất. Họ phải tự tìm ra hưởng đế tiêu thụ sản phẩm của mình nhằm thu lại tiền. Sau khi kinh doanh việc hạch toán kinh tế là cần thiết bởi vì nó cho biết cụ thể số lỗ và số lãi. Nếu lãi thì chia nhau, còn lỗ thì họ phải tự chịu.
-
-2.2.3.6. Tiết kiệm và hiệu quả
-
-    Tiết kiệm và hiệu quả là hai mặt của cùng một vấn đề, đó là làm sao để với một cơ sở vật chất và kỹ thuật, một nguồn tài nguyên, một lực lượng lao động xã hội hiện có và sẽ có trong một giai đoạn phát triển kinh tế nào đó, có thể sản xuất ra được một khối lượng của cải vật chất và tinh thần nhiều nhất, đáp ứng ngày càng tốt hơn nhu cầu vật chất và văn hóa của xã hội xã hội chủ nghĩa, chứng minh tính vượt trội so với hệ thống quản lý kinh tế tư bản chủ nghĩa.
-
-    Trong nền kinh tế sản xuất nhỏ, tiết kiệm thường đóng khung trong tiết kiệm tiêu dùng cá nhân, hoặc người ta chỉ lo tiết kiệm trong việc sản xuất từng đơn vị sản phẩm, không tính đến và cũng không thể đáp ứng nhu cầu to lớn của toàn xã hội về tư liệu sản xuất và vật phẩm tiêu dùng, không thể đảm bảo hiệu quả kinh tế cho nền sản xuất xã hội. 
-
-    Dưới chế độ xã hội chủ nghĩa, tiết kiệm bao gồm cả tiết kiệm trong sản xuất, xây dựng và tiêu dùng. Cơ sở khách quan của chế độ tiết kiệm trong quản lý kinh tế xã hội chủ nghĩa và cũng là bảo đảm chắc chắn cho chế độ ấy trở thành hiện thực trong hoạt động kinh tế là kế hoạch trong toàn bộ nên sản xuất xã hội và sự nhất trí về lợi ích cơ bản trong xã hội xã hội chủ nghĩa giữa các giai cấp, các tầng lớp, các cá nhân người lao động, giữa lợi ích cá nhân, tập thể và toàn bộ xã hội.
-
-    C. Mác đã nhận định: khi muốn có sản xuất tập thể thì việc tính toán thời gian tất nhiên có một ý nghĩa chủ yếu. Thời gian mà xã hội cần để sản xuất ra lúa mì, gia súc và những thứ khác càng lâu bao nhiêu, thì số thời gian mà xả hội dành cho công tác sản xuất ra những của cải vật chất và tinh thần càng nhiều bấy nhiêu. Tính chất toàn diện trong sự hoạt động, sự phát triển và trong việc tiêu dùng của mỗi thành viên cũng như của toàn xã hội đều phụ thuộc vào việc tiết kiệm thời gian. Toàn bộ vấn đề tiết kiệm chung quy là vấn đề tiết kiệm thời gian. Bởi vì, việc tiết kiệm thời gian cũng như việc phân phối một cách có kế hoạch thời gian lao động trong các ngành sản xuất khác nhau vẫn là một quy luật.
-
-    Từ luận điểm của C.Mác trên đây có thể rút ra mấy kết luận như sau:
-
-    Một là, mọi thứ tiết kiệm suy cho cùng là tiết kiệm thời gian.
-
-    Hai là, tiết kiệm là quy luật của nền sản xuất xã hội, dựa trên cơ sở phải sử dụng có hiệu quả nhất mọi tiềm năng và cơ hội.
-
-    Ba là, quy luật tiết kiệm gắn liền với quy luật phải tận dụng các thành quả của khoa học và công nghệ.
-
-    Yêu cầu của nguyên tắc hiệu quả, tiết kiệm chính là ở chỗ phải đạt được kết quả của các hoạt động kinh tế cao nhất trong phạm vì có thể được.
-
-Khả năng tiết kiệm có nhiều, trong đó có thể bao gồm các việc sau:
-
-1. Có đường lối, chiến lược phát triển kinh tế đúng đắn, phù hợp với đòi hỏi của các quy luật khách quan.
-
-2. Giảm chi phí vật tư. Đây là một việc làm có ý nghĩa kinh tế quốc dân to lớn. Tiết kiệm nguồn vật tư tương đương với việc mở rộng cơ sở nguyên liệu trong công nghiệp khai thác mà không cần đầu tư thêm cho xây dựng cơ bản. Nó còn đảm bảo cho việc tiết kiệm lao động sống vì nó giảm bớt nhu cầu về sức lao động cần cho việc bốc dỡ, vận chuyển và bảo quản các vật tư đang sử dụng, giảm bớt thời gian gia công chung, do đó làm giảm giá thành.
-
-    Việc tiết kiệm vật tư được thực hiện bằng cách: 
-
-- Áp dụng kỹ thuật mới và quy trình công nghệ tiên tiến. 
-
-- Cải tiến kết cấu sản phẩm, giảm trọng lượng. 
-
-- Nâng cao chất lượng sản phẩm.
-
-- Sử dụng vật tư nhiều lần, giảm tổn thất về phế liệu, tận dụng phế liệu.
-
-- Sử dụng vật liệu thay thế và phế phẩm.
-
-3. Tiết kiệm lao động sống. Tuy nguồn dự trữ về sức lao động ở nước ta rất lớn nhưng không vì thế mà không có biện pháp quan trọng để sử dụng hợp lý và tiết kiệm chúng, đặc biệt là vấn đề nâng cao trình độ nghề nghiệp cho người lao động. Cần tổ chức một cách khoa học tất cả các loại lao động, kể cả lao động quản lý.
-
-    Phương tiện để tiết kiệm lao động có hiệu quả là cải tiến | bộ máy quản lý, giảm bớt chi phí hành chính theo hướng gọn nhẹ, thạo việc và linh hoạt.
-
-4. Đảm bảo đầu tư có trọng điểm, tránh phân tán tản man, coi trọng tính hệ thống, tính đồng bộ của đầu tư xây từng cơ bản.
-
-5. Tiết kiệm trong sử dụng tài nguyên thiên nhiên. Cần có biện pháp bảo vệ thiên nhiên và tận dụng các nguồn tài nguyên thiên nhiên. Tránh tình trạng rừng bị chặt đốn bừa bãi, các hầm mỏ bị khai thác ẩu, đất đai bị sử dụng không hợp ký trở thành đất bạc mầu, hoặc bị lãng phí trong xây dựng, làm mất nhiều đất, động vật hiếm quý bị đánh bắt vô tổ chức, các nguồn tài nguyên thiên nhiên mai một dần đi và sức khoẻ của con người bị tổn hại nghiêm trọng.
-
-2.2.3.7. Mở rộng hợp tác kinh tế đối ngoại với yêu cầu các bên cùng có lợi, không xâm phạm độc lập, chủ quyền và lãnh thổ của nhau.
-
-    Đây là một nguyên tắc nhất quán và trước sau như một của Đảng và Nhà nước ta.
-
-    Văn kiện Đại hội Đại biểu toàn quốc lần thứ IX của Đảng đã ghi rõ:
-
-    Nhiệm vụ đối ngoại là tiếp tục giữ vững môi trường hoà bình và tạo các điều kiện quốc tế thuận lợi để đẩy mạnh phát triển kinh tế - xã hội, công nghiệp hóa, hiện đại hóa đất nước, xây dựng và bảo vệ Tổ quốc, bảo đảm độc lập và chủ quyền quốc gia, đồng thời góp phần tích cực vào cuộc đấu tranh chung của nhân dân thế giới vì hòa bình, độc lập dân tộc, dân chủ và tiến bộ xã hội.
-
-    Mở rộng quan hệ nhiều mặt, song phương và đa phương với các nước và vùng lãnh thổ, các trung tâm chính trị, kinh tế quốc tế lớn, các tổ chức quốc tế và khu vực theo nguyên tắc tôn trọng độc lập, chủ quyền và toàn vẹn lãnh thổ, không can thiệp vào công việc nội bộ của nhau, không dùng vũ lực hoặc đe dọa dùng vũ lực, bình đẳng và cùng có lợi; giải quyết các bất đồng và tranh chấp bằng thương lượng hòa bình; làm thất bại mọi âm mưu và hành động gây sức ép, áp đặt và cường quyển.
-
-    Chủ động hội nhập kinh tế quốc tế và khu vực theo tinh thân phát huy tối đa nội lực, nâng cao hiệu quả hợp tác quốc tế, bảo đảm độc lập tự chủ và định hướng xã hội chủ nghĩa, bảo vệ lợi ích dân tộc, an ninh quốc gia, giữ gìn bản sắc văn hóa dân tộc, bảo vệ môi trường. Chính phủ cùng các Bộ, ngành và các doanh nghiệp khẩn trương xây dựng và thực hiện kế hoạch hội nhập kinh tế quốc tế với lộ trình hợp lý và chương trình hành động cụ thể, phát huy tính chủ động của các cấp, các ngành và các doanh nghiệp; đẩy mạnh chuyển dịch cơ cấu kinh tế và đổi mới cơ chế quản lý kinh tế - xã hội, hoàn chỉnh hệ thống luật pháp, nâng cao năng lực cạnh tranh của các doanh nghiệp và nền kinh tế.
-
-    Coi trọng và phát triển quan hệ hữu nghị, hợp tác với các nước xã hội chủ nghĩa và các nước láng giềng. Nâng cao hiệu quả và chất lượng hợp tác với các nước ASEAN, cùng xây dựng Đông Nam Á thành một khu vực hòa bình, không có vũ khí hạt nhân, ổn định, hợp tác cùng phát triển. .
-
-    Tiếp tục mở rộng quan hệ với các nước bạn bè truyền thống, các nước độc lập dân tộc, các nước đang phát triển ở châu Á, châu Phi, Trung Đông và Mỹ Latinh, các nước trong Phong trào không liên kết, ủng hộ lẫn nhau cùng phát triển, phối hợp bảo vệ lợi ích chính đáng của nhau.
-
-    Thúc đẩy quan hệ đa phương với các nước phát triển và các tổ chức quốc tế. Đẩy mạnh hoạt động ở các diễn đàn đa phương.
-
-    Tích cực tham gia giải quyết các vấn đề toàn cầu. Ủng hộ và cùng nhân dân thế giới đấu tranh nhằm loại trừ hoàn toàn vũ khí hạt nhân, vũ khí sinh học và mọi phương tiện chiến tranh hiện đại khác giết người hàng loạt, bảo vệ hòa bình, chống nguy cơ chiến tranh và chạy đua vũ trang; tôn trọng độc lập, chủ quyền, toàn vẹn lãnh thổ và quyền tự lựa chọn con đường phát triển của mỗi dân tộc trên thế giới; góp phần xây dựng trật tự chính trị, kinh tế quốc tế dân chủ, công bằng. 
-
-    Củng cố và tăng cường quan hệ đoàn kết hợp tác với các đảng cộng sản và công nhân, với các đảng cánh tả, các phong trào giải phóng và độc lập dân tộc, với các phong trào cách mạng và tiến bộ trên thế giới. Tiếp tục mở rộng quan hệ với các đảng cầm quyền. 
-
-    Mở rộng hơn nữa công tác đối ngoại nhân dân, tăng cường quan hệ song phương và đa phương với các tổ chức nhân dân các nước, nâng cao hiệu quả hợp tác với các tổ chức phi Chính phủ quốc gia và quốc tế, góp phần tăng cường sự hiểu biết lẫn nhau, quan hệ hữu nghị và hợp tác giữa nhân dân ta và nhân dân các nước trong khu vực và trên thế giới.
-
-    Đẩy mạnh công tác thông tin phục vụ nghiên cứu, làm tốt công tác dự báo tình hình khu vực và thế giới, kịp thời có những chủ trương, chính sách đối ngoại thích hợp khi tình hình thay đổi. Tăng cường hơn nữa công tác thông tin đối ngoại và văn hóa đối ngoại.
-
-    Bồi dưỡng, rèn luyện bản lĩnh chính trị, năng lực, đạo đức, phẩm chất của đội ngũ cán bộ làm công tác đối ngoại, kể cả kinh tế đối ngoại.
-
-    Phối hợp chặt chẽ hoạt động ngoại giao của Nhà nước, hệ thống đối ngoại của Đảng và hoạt động đối ngoại nhân dân. Hoàn thiện cơ chế quản lý thống nhất các hoạt động đối ngoại, tạo thành sức mạnh tổng hợp, thực hiện có kết quả nhiệm vụ công tác đối ngoại, làm cho thế giới hiểu rõ hơn đất nước, con người, công cuộc đổi mới của Việt Nam, đường lối, chính sách của Đảng và Nhà nước ta, tranh thủ sự đồng tình, ủng hộ và hợp tác ngày càng rộng rãi của thế giới. (Văn kiện Đại hội Đảng lần thứ IX, trang 119 đến 123).
-
-2.2.3.8. Nguyên tắc gắn phát triển kinh tế với phát triển văn hóa - xã hội, bảo đảm định hướng xã hội chủ nghĩa của sự phát triển
-
-    Đây là một nguyên tắc hết sức quan trọng nhằm duy trì và phát triển các đặc trưng phải có của chủ nghĩa xã hội.
-
-    Văn kiện Đại hội Đại biểu toàn quốc lần thứ VIII của Đảng đã khẳng định:
-
-    "Nắm vững định hướng xã hội chủ nghĩa trong việc xây dựng nền kinh tế nhiều thành phần:
-
-- Thực hiện nhất quán, lâu dài chính sách phát triển nền kinh tế hàng hóa nhiều thành phần. Lấy việc giải phóng sức sản xuất, động viên tối đa mọi nguồn lực bên trong và bên ngoài cho công nghiệp hóa, hiện đại hóa, nâng cao hiệu quả kinh tế và xã hội, cải thiện đời sống của nhân dân làm mục tiêu hàng đầu trong việc khuyến khích phát triển các thành phần kinh tế và hình thức tổ chức kinh doanh.
-
-- Chủ động đổi mới, phát triển và nâng cao hiệu quả kinh tế nhà nước, kinh tế hợp tác. Kinh tế nhà nước đóng vai trò chủ đạo, cùng với kinh tế hợp tác xã dần dần trở thành nên tảng. Tạo điều kiện kinh tế và pháp lý thuận lợi để các nhà kinh doanh tự nhận yên tâm đầu tư làm ăn lâu dài. Mở rộng các hình thức liên doanh liên kết giữa kinh tế nhà nước với các thành phần kinh tế khác cả trong và ngoài nước. Áp dụng phổ biến các hình thức kinh tế tư bản nhà nước.
-
-- Xác lập, củng cố và nâng cao địa vị làm chủ của người lao động trong nền sản xuất xã hội, thực hiện công bằng xã hội ngày một tốt hơn.
-
-- Thực hiện nhiều hình thức phân phối dựa trên mức đóng góp các nguồn lực khác vào kết quả sản xuất - kinh doanh và phân phối thông qua phúc lợi xã hội. Thừa nhận sự tồn tại lâu dài của các hình thức thuê mướn lao động nhưng không để biến thành quan hệ thống trị, dẫn tới sự phân hóa xã hội thành hai cực đối lập. Phân phối và phân phối lại hợp lý các thu nhập; khuyến khích làm giàu hợp pháp đi đôi với xóa đói giảm nghèo, không để diễn ra chênh lệch quá đáng về mức sống và trình độ phát triển giữa các vùng, các tầng lớp dân cư.
-
-- Tăng cường hiệu lực quản lý vĩ mô của Nhà nước, khai thác triệt để vai trò tích cực đi đôi với khắc phục và ngăn ngừa, hạn chế những tác động tiêu cực của cơ chế thị trường. Bảo đảm sự bình đẳng về quyền và nghĩa vụ trước pháp luật của mọi doanh nghiệp và cá nhân không phân biệt thành phần kinh tế (Văn kiện, trang 91 - 93.SĐD).
-
-    Hội nghị lần thứ IV Ban Chấp hành Trung ương khoá VIII tháng 12 năm 1997 cũng khẳng định lại: "Thực hiện cơ chế thị trường, nhưng Nhà nước phải quản lý và điều tiết theo định hướng xã hội chủ nghĩa", "Phát triển kinh tế phải đi đôi với thực hiện công bằng xã hội, khắc phục tình trạng phân hóa giàu nghèo ngày càng mở rộng".
-
-2.2.3.9. Nguyên tắc pháp chế xã hội chủ nghĩa
-
-    Nguyên tắc này đòi hỏi tổ chức và hoạt động quản lý nhà nước phải dựa trên cơ sở pháp luật của nhà nước. Nguyên tắc này không cho phép các cơ quan nhà nước thực hiện việc quản lý nhà nước một cách chủ quan, tuỳ tiện mà phải dựa vào pháp luật của Nhà nước. Để thực hiện nguyên tắc này phải có ba điều kiện: Xây dựng và hoàn chỉnh pháp luật; giáo dục pháp luật cho toàn dân; phải xử lý một cách nghiêm minh mọi hành vi vi phạm pháp luật (kể cả nhân dân và công chức nhà nước).
-
-    Đảng và Nhà nước ta đã chỉ rõ pháp luật phải được chấp hành nghiêm chỉnh, mọi người đều bình đẳng trước pháp luật. Bất cứ ai vi phạm pháp luật đều phải đưa ra xét xử theo pháp luật, không được giữ lại để xử lý nội bộ. Không được làm theo kiểu phong kiến: "dân thì chịu hình pháp, quan thì xử theo lễ". Cấm bao che hành động phạm pháp bất cứ dưới hình thức nào.
+Giảm mã lặp (Boilerplate code). Chỉ cần khai báo Interface, Spring sẽ tự động tạo các phương thức CRUD cơ bản
 
