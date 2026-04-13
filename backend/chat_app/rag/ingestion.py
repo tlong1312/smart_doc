@@ -84,7 +84,6 @@ def ingest_file(file_path: str, doc_id: str):
         elif ext in [".png", ".jpg", ".jpeg"]:
             loader = UnstructuredImageLoader(file_path)
             docs = loader.load()
-
         else:
             return {"status": "error", "msg": f"He thong chua ho tro dinh dang {ext}"}
 
