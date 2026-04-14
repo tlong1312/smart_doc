@@ -179,15 +179,8 @@ def get_documents(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-def get_chat_history(request):
+def get_chat_history(request, session_id):
     try:
-        session_id = request.query_params.get('session_id')
-
-        if not session_id:
-            return Response({
-                "error": "Thiếu session_id trong query params"
-            }, status=status.HTTP_400_BAD_REQUEST)
-
         try:
             session = ChatSession.objects.get(id=session_id)
         except ChatSession.DoesNotExist:
@@ -286,16 +279,9 @@ def rebuild_faiss_index(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['DELETE'])
-def delete_chat_history(request):
+def delete_chat_history(request, session_id):
 
     try:
-        session_id = request.query_params.get('session_id')
-
-        if not session_id:
-            return Response({
-                "error": "Thiếu session_id trong query params"
-            }, status=status.HTTP_400_BAD_REQUEST)
-
         try:
             session = ChatSession.objects.get(id=session_id)
         except ChatSession.DoesNotExist:
@@ -324,14 +310,8 @@ def delete_chat_history(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['DELETE'])
-def delete_session(request):
+def delete_session(request, session_id):
     try:
-        session_id = request.query_params.get('session_id')
-
-        if not session_id:
-            return Response({
-                "error": "Thiếu session_id trong query params"
-            }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             session = ChatSession.objects.get(id=session_id)

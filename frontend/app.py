@@ -5,6 +5,7 @@ import chat_ui
 
 # Cấu hình đường dẫn API Backend của bạn
 BACKEND_URL = "http://127.0.0.1:8000/api"
+UPLOAD_API_URL = f"{BACKEND_URL}/documents/upload/"
 
 # ==========================================
 # 1. KHỞI TẠO BỘ NHỚ LƯU ID TÀI LIỆU
@@ -45,7 +46,7 @@ if st.button("Xử lý tài liệu"):
 
             try:
                 # Bắn request POST
-                response = requests.post(f"{BACKEND_URL}/upload/", files=files_payload)
+                response = requests.post(UPLOAD_API_URL, files=files_payload)
 
                 if response.status_code == 200:
                     data = response.json()

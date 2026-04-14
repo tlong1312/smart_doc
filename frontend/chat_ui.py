@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import json
 
-CHAT_API_URL = "http://127.0.0.1:8000/api/chat/"
+CHAT_API_URL = "http://127.0.0.1:8000/api/chats/"
 
 def render_chat_ui():
     st.markdown("---")
