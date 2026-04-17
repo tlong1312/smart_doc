@@ -1,90 +1,183 @@
+from pathlib import Path
+
 import streamlit as st
-import requests
 
-import chat_ui
+from main import (
+    hien_thi_tai_lieu_da_tai,
+    hien_thi_thanh_ben,
+    hien_thi_tieu_de_trang,
+    hien_thi_trang_trong,
+)
+from state import khoi_tao_trang_thai
+from upload import xu_ly_tai_lieu_tam
 
-# Cấu hình đường dẫn API Backend của bạn
-BACKEND_URL = "http://127.0.0.1:8000/api"
-UPLOAD_API_URL = f"{BACKEND_URL}/documents/upload/"
+BASE_CSS = Path(__file__).with_name("style.css").read_text(encoding="utf-8")
 
-# ==========================================
-# 1. KHỞI TẠO BỘ NHỚ LƯU ID TÀI LIỆU
-# ==========================================
-# Phải là mảng [] để tích lũy dần mỗi khi user up thêm file
-if 'document_ids' not in st.session_state:
-    st.session_state['document_ids'] = []
+MANDATORY_FLAT_CSS = (
+    "<style>\n"
+    + BASE_CSS
+    + """
 
-st.set_page_config(page_title="SmartDoc AI", page_icon="📄")
-st.title("🤖 SmartDoc AI - Intelligent Document Q&A System")
+/* Primary button: + Cuoc tro chuyen moi */
+[data-testid="stSidebar"] .st-key-new_chat_primary button {
+    border-radius: 20px !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+[data-testid="stSidebar"] .st-key-new_chat_primary button:hover {
+    background: #eaf3ff !important;
+    border-color: rgba(0, 123, 255, 0.22) !important;
+}
 
-# ==========================================
-# 2. KHU VỰC UPLOAD (Cho phép chọn nhiều file)
-# ==========================================
-uploaded_files = st.file_uploader(
-    "Tải lên tài liệu PDF hoặc DOCX (Có thể chọn nhiều file)",
-    type=['pdf', 'docx'],
-    accept_multiple_files=True
+/* Hide Streamlit popover arrow icon while keeping label (\"⋮\", \"📎\") */
+[data-testid="stPopover"] > button svg {
+    display: none !important;
+}
+
+/* Flat, round popover trigger buttons */
+[data-testid="stPopover"] > button {
+    border-radius: 999px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+    border: 1px solid transparent !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: transparent !important;
+    color: #6b7280 !important;
+}
+[data-testid="stPopover"] > button:hover {
+    background-color: rgba(150, 150, 150, 0.15) !important;
+    border-color: #e5e7eb !important;
+    color: #1f2937 !important;
+}
+
+/* Keep 3-dot menu hidden until conversation row is hovered */
+[data-testid="stSidebar"] div[data-testid="stHorizontalBlock"] [data-testid="stPopover"] {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+[data-testid="stSidebar"] div[data-testid="stHorizontalBlock"]:hover [data-testid="stPopover"] {
+    opacity: 1;
+}
+
+/* Conversation buttons in sidebar */
+[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: left !important;
+    font-weight: 500 !important;
+    padding: 6px 10px !important;
+    width: 100% !important;
+    transition: background-color 0.2s ease;
+}
+[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover {
+    background-color: rgba(150, 150, 150, 0.1) !important;
+    border-radius: 10px !important;
+}
+
+/* Sidebar utility buttons look less plain and stay left aligned */
+[data-testid="stSidebar"] .st-key-refresh_session_list button,
+[data-testid="stSidebar"] .st-key-clear_history_btn button,
+[data-testid="stSidebar"] .st-key-clear_vector_store_btn button {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    background: #ffffff !important;
+    color: #1f2937 !important;
+}
+[data-testid="stSidebar"] .st-key-refresh_session_list button:hover,
+[data-testid="stSidebar"] .st-key-clear_history_btn button:hover,
+[data-testid="stSidebar"] .st-key-clear_vector_store_btn button:hover {
+    background: #f7fbff !important;
+}
+
+/* History rows: subtle bordered cards, no weird center/indent feeling */
+[data-testid="stSidebar"] [class*="st-key-session_row_"] [data-testid="stHorizontalBlock"] {
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 4px;
+    margin-bottom: 8px;
+}
+[data-testid="stSidebar"] [class*="st-key-session_row_"] [data-testid="column"]:first-child button {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    border: none !important;
+    background: transparent !important;
+    min-height: 34px !important;
+    padding-left: 8px !important;
+}
+[data-testid="stSidebar"] [class*="st-key-session_row_"] [data-testid="column"]:first-child button p {
+    text-align: left !important;
+}
+
+/* Sidebar smooth scrolling for long session list */
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+}
+
+/* Chat input docked and full width to align with chat thread */
+div[data-testid="stChatInput"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Keep dialog centered and buttons visually aligned */
+div[data-testid="stDialog"] section[role="dialog"] {
+    width: min(480px, 90vw) !important;
+    min-width: min(480px, 90vw) !important;
+    max-width: min(480px, 90vw) !important;
+}
+
+/* Source context card in citation expander */
+.source-context-box {
+    border: 1px solid rgba(0, 123, 255, 0.16);
+    background: rgba(234, 243, 255, 0.45);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #334155;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+</style>"""
 )
 
-if st.button("Xử lý tài liệu"):
-    if uploaded_files:
-        # Giao diện loading xịn xò
-        progress_bar = st.progress(0)
-        status_text = st.empty()
+st.set_page_config(
+    page_title="SmartDoc AI",
+    page_icon=":blue_book:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
-        total_files = len(uploaded_files)
-        success_count = 0
+khoi_tao_trang_thai()
+# Luôn tắt popup upload tự động; upload chỉ qua nút/ghim đính kèm.
+st.session_state["show_upload_modal"] = False
 
-        # ==========================================
-        # 3. VÒNG LẶP UPLOAD TỪNG FILE XUỐNG BACKEND
-        # ==========================================
-        for i, file in enumerate(uploaded_files):
-            status_text.text(f"Đang xử lý {i + 1}/{total_files}: {file.name}...")
 
-            # Đóng gói đúng 1 file cho mỗi lần gọi API (khớp với BE của bạn)
-            files_payload = {'file': (file.name, file.getvalue(), file.type)}
+st.markdown(MANDATORY_FLAT_CSS, unsafe_allow_html=True)
 
-            try:
-                # Bắn request POST
-                response = requests.post(UPLOAD_API_URL, files=files_payload)
+hien_thi_thanh_ben()
 
-                if response.status_code == 200:
-                    data = response.json()
-                    new_id = data.get('document_id')  # Lấy ID Backend trả về
 
-                    if new_id:
-                        # TUYỆT CHIÊU: Nhét ID mới vào kho lưu trữ chung
-                        st.session_state['document_ids'].append(new_id)
-                    success_count += 1
-                else:
-                    st.error(f"Lỗi file {file.name}: {response.json().get('error', 'Lỗi không xác định')}")
+hien_thi_tieu_de_trang()
+xu_ly_tai_lieu_tam()
 
-            except Exception as e:
-                st.error(f"Không thể kết nối Backend khi up file {file.name}! Kiểm tra port 8000.")
+if not st.session_state["messages"] and not st.session_state["pending_auto_summary"]:
+    hien_thi_trang_trong()
 
-            # Tăng thanh tiến trình lên (ví dụ up 1/2 file thì thanh chạy 50%)
-            progress_bar.progress((i + 1) / total_files)
+hien_thi_tai_lieu_da_tai()
 
-        # ==========================================
-        # 4. DỌN DẸP & THÔNG BÁO HOÀN TẤT
-        # ==========================================
-        # Xóa các ID trùng lặp phòng trường hợp user up 1 file 2 lần
-        st.session_state['document_ids'] = list(set(st.session_state['document_ids']))
-
-        status_text.text(f"Hoàn tất! Đã đọc thành công {success_count}/{total_files} tài liệu.")
-
-    else:
-        st.warning("Vui lòng chọn ít nhất 1 file trước khi bấm xử lý.")
-
-st.divider()
-
-# ==========================================
-# 5. HIỂN THỊ TRẠNG THÁI CHO USER BIẾT
-# ==========================================
-if st.session_state['document_ids']:
-    st.info(
-        f"📚 Hệ thống đang ghi nhớ **{len(st.session_state['document_ids'])}** tài liệu. Đã sẵn sàng để trả lời câu hỏi!")
-else:
-    st.write("*(Chưa có tài liệu nào trong bộ nhớ...)*")
-chat_ui.render_sidebar_tools()
-chat_ui.render_chat_ui()
+import chat_ui
+chat_ui.render_chat_interface()

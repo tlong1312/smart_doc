@@ -91,7 +91,10 @@ def chat_with_document(request):
             return Response({"error": "Không tìm thấy tài liệu nào hợp lệ!"}, status=status.HTTP_404_NOT_FOUND)
 
         if session_id:
-            session = ChatSession.objects.get(id=session_id)
+            try:
+                session = ChatSession.objects.get(id=session_id)
+            except ChatSession.DoesNotExist:
+                return Response({"error": "Session không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
             for doc in docs:
                 session.documents.add(doc)
         else:
@@ -117,13 +120,14 @@ def chat_with_document(request):
             absolute_faiss_path,
             user_message,
             history_text,
-            doc_ids_str
+            doc_ids_str,
         )
 
         ChatMessage.objects.create(
             session=session,
             sender='AI',
-            message_text=ai_response_text
+            message_text=ai_response_text,
+            sources=source_list,
         )
 
         return Response({
@@ -132,6 +136,7 @@ def chat_with_document(request):
             "sources": source_list
         }, status=status.HTTP_200_OK)
     except Exception as e:
+        logger.exception(f"Chat API error: {str(e)}")
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['DELETE'])
@@ -154,6 +159,38 @@ def clear_all_data(request):
         return Response({"message": "Reset success"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['DELETE'])
+def clear_vector_store(request):
+    try:
+        deleted_documents = Document.objects.count()
+        Document.objects.all().delete()
+
+        uploads_path = os.path.join(settings.BASE_DIR, 'uploads')
+        if os.path.exists(uploads_path):
+            shutil.rmtree(uploads_path)
+        os.makedirs(uploads_path, exist_ok=True)
+
+        global_index_path = os.path.join(settings.BASE_DIR, 'faiss_index', 'global_index')
+        if os.path.exists(global_index_path):
+            shutil.rmtree(global_index_path)
+
+        bm25_path = os.path.join(settings.BASE_DIR, 'faiss_index', 'bm25_index.pkl')
+        if os.path.exists(bm25_path):
+            os.remove(bm25_path)
+
+        return Response(
+            {
+                "status": "success",
+                "deleted_documents": deleted_documents,
+                "message": "Đã xóa Vector Store và toàn bộ tài liệu đã tải lên.",
+            },
+            status=status.HTTP_200_OK,
+        )
+    except Exception as e:
+        logger.exception(f"Clear vector store error: {str(e)}")
+        return Response({"status": "error", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 def get_documents(request):
@@ -195,7 +232,8 @@ def get_chat_history(request, session_id):
                 "id": str(msg.id),
                 "sender": msg.sender,
                 "message": msg.message_text,
-                "created_at": msg.created_at.isoformat()
+                "created_at": msg.created_at.isoformat(),
+                "sources": msg.sources or [],
             }
             for msg in messages
         ]
@@ -347,14 +385,25 @@ def get_all_sessions(request):
 
         sessions_data = []
         for session in sessions:
-            messages = ChatMessage.objects.filter(session=session)
+            messages = ChatMessage.objects.filter(session=session).order_by('created_at')
+            last_message = messages.last()
             documents = session.documents.all()
+
+            if last_message and last_message.message_text:
+                preview_text = " ".join(last_message.message_text.strip().split())
+                preview_text = preview_text[:120]
+                updated_at = last_message.created_at.isoformat()
+            else:
+                preview_text = "Phiên hội thoại mới"
+                updated_at = session.created_at.isoformat()
 
             sessions_data.append({
                 "session_id": str(session.id),
                 "created_at": session.created_at.isoformat(),
+                "updated_at": updated_at,
                 "total_messages": messages.count(),
                 "total_documents": documents.count(),
+                "last_message_preview": preview_text,
                 "documents": [
                     {
                         "id": str(doc.id),

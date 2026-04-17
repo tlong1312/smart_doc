@@ -1,0 +1,424 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap");
+
+:root {
+    --brand: #007bff;
+    --brand-soft: #eaf3ff;
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: rgba(15, 23, 42, 0.08);
+}
+
+html,
+body,
+[class*="css"] {
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.stApp {
+    background:
+        radial-gradient(circle at top, rgba(0, 123, 255, 0.08), transparent 22%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    color: var(--text);
+}
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    border-right: 1px solid var(--line);
+    min-width: 21rem !important;
+    width: 21rem !important;
+    max-width: 21rem !important;
+    flex-shrink: 0;
+    transform: none !important;
+    margin-left: 0 !important;
+    visibility: visible !important;
+}
+
+[data-testid="stSidebar"][aria-expanded="false"] {
+    min-width: 21rem !important;
+    width: 21rem !important;
+    max-width: 21rem !important;
+    transform: none !important;
+    margin-left: 0 !important;
+    visibility: visible !important;
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    padding-top: 1.1rem;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1.25rem;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+.block-container {
+    max-width: 1240px;
+    padding-top: 1.6rem;
+    padding-bottom: 2.6rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+header[data-testid="stHeader"],
+#MainMenu,
+footer {
+    visibility: hidden;
+}
+
+h1,
+h2,
+h3 {
+    color: var(--text);
+    letter-spacing: -0.02em;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    padding: 1rem 1.05rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--line);
+    font-size: 1.02rem;
+    font-weight: 700;
+    box-shadow: 0 14px 30px rgba(0, 123, 255, 0.06);
+}
+
+.sidebar-brand__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 14px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-size: 1.05rem;
+}
+
+.sidebar-section {
+    margin-top: 1.25rem;
+    margin-bottom: 0.55rem;
+    color: #8b949e;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.project-card {
+    padding: 0.95rem 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--line);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploader"] {
+    margin: 0.55rem 0 0.2rem;
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploader"] > label,
+[data-testid="stSidebar"] [data-testid="stFileUploader"] small,
+[data-testid="stSidebar"] [data-testid="stFileUploaderDropzoneInstructions"] {
+    display: none;
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {
+    width: 100%;
+    min-height: 3.2rem;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 24px rgba(0, 123, 255, 0.05);
+    color: transparent;
+    font-size: 0;
+    position: relative;
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button::after {
+    content: "Tải tài liệu";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
+[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button:hover {
+    border-color: rgba(0, 123, 255, 0.25);
+    box-shadow: 0 14px 28px rgba(0, 123, 255, 0.08);
+}
+
+.connection-card {
+    margin-top: 0.9rem;
+    padding: 1rem;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    border: 1px solid rgba(0, 123, 255, 0.12);
+    box-shadow: 0 12px 28px rgba(0, 123, 255, 0.06);
+}
+
+.connection-card__title {
+    margin: 0 0 0.35rem;
+    color: var(--text);
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.connection-card__hint {
+    margin: 0 0 0.8rem;
+    color: var(--muted);
+    font-size: 0.84rem;
+    line-height: 1.55;
+}
+
+.connection-chip-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.connection-chip {
+    padding: 0.7rem 0.8rem;
+    border-radius: 14px;
+    background: rgba(0, 123, 255, 0.06);
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.connection-empty {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.recent-card {
+    margin-bottom: 0.55rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 123, 255, 0.08);
+    color: #374151;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.topbar {
+    margin-bottom: 1rem;
+    padding: 0.2rem 0.2rem 0.4rem;
+}
+
+.topbar__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.55rem);
+}
+
+.topbar p {
+    max-width: 760px;
+    margin: 0.65rem 0 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+    text-align: center;
+    padding: 2.8rem 1rem 1.15rem;
+}
+
+.empty-state h2 {
+    max-width: 780px;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.22;
+}
+
+.empty-state p {
+    max-width: 720px;
+    margin: 1rem auto 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.doc-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0.8rem 0 1.1rem;
+}
+
+.doc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 0.95rem;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 123, 255, 0.12);
+    color: #334155;
+    font-size: 0.88rem;
+    box-shadow: 0 8px 24px rgba(0, 123, 255, 0.05);
+}
+
+div[data-testid="stChatMessage"] {
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.55rem 1rem;
+    margin-top: 1.1rem;
+    box-shadow: 0 14px 32px rgba(0, 123, 255, 0.05);
+}
+
+div[data-testid="stChatMessageContent"] p {
+    line-height: 1.72;
+}
+
+div[data-testid="stChatInput"] {
+    max-width: 900px;
+    margin: 0 auto 1rem;
+}
+
+div[data-testid="stChatInput"] textarea {
+    border-radius: 28px;
+    border: 1px solid rgba(0, 123, 255, 0.16);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 18px 44px rgba(0, 123, 255, 0.08);
+    padding-top: 0.7rem;
+}
+
+div[data-testid="stExpander"] {
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.88);
+}
+
+div[data-testid="stDialog"] section[role="dialog"] {
+    width: min(400px, 88vw);
+    min-width: min(400px, 88vw);
+    max-width: min(400px, 88vw);
+    border-radius: 24px;
+    border: 1px solid rgba(0, 123, 255, 0.12);
+    background:
+        radial-gradient(circle at top, rgba(0, 123, 255, 0.1), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+    box-shadow: 0 24px 56px rgba(0, 123, 255, 0.12);
+}
+
+.upload-dialog {
+    padding: 0.3rem 0.4rem 0.6rem;
+    text-align: center;
+}
+
+.upload-dialog h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.upload-dialog p {
+    max-width: 280px;
+    margin: 0.7rem auto 0.85rem;
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 0.92rem;
+}
+
+.upload-dialog__tag {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    padding: 0.38rem 0.8rem;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    border: 1px solid rgba(0, 123, 255, 0.12);
+    color: var(--brand);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.upload-tip {
+    margin-top: 1rem;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+div[data-testid="stDialog"] div[data-testid="stFileUploader"] > section {
+    min-height: 180px;
+    border-radius: 24px;
+    border: 2px dashed rgba(0, 123, 255, 0.22);
+    background: rgba(255, 255, 255, 0.82);
+    padding: 1.15rem;
+}
+
+div[data-testid="stFileUploader"] small {
+    color: #6b7280;
+}
+
+.auto-summary-label {
+    margin-bottom: 0.45rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+    .block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 1.1rem;
+    }
+
+    .empty-state {
+        min-height: 32vh;
+        padding-top: 1rem;
+    }
+
+    .empty-state h2 {
+        font-size: 2rem;
+    }
+}
