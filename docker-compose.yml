@@ -14,6 +14,30 @@ services:
 
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
-
+  backend:
+    build: ./backend
+    container_name: django_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=rag_chat_db
+      - DB_USER=postgres
+      - DB_PASS=123
+      - DB_PORT=5432
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    container_name: streamlit_frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://backend:8000/api
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
 volumes:
   postgres_data:

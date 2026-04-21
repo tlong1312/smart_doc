@@ -46,7 +46,11 @@ def _get_embeddings():
 def _get_llm():
     global _LLM
     if _LLM is None:
-        _LLM = ChatOllama(model=LLM_MODEL, temperature=0.1)
+        _LLM = ChatOllama(
+            model=LLM_MODEL,
+            temperature=0.1,
+            base_url=os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
+        )
     return _LLM
 
 def _get_cross_encoder():

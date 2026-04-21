@@ -4,7 +4,8 @@ import hashlib
 import requests
 import streamlit as st
 
-BACKEND_URL = "http://127.0.0.1:8000/api"
+import os
+BACKEND_URL = os.getenv("API_URL", "http://127.0.0.1:8000/api").rstrip("/")
 SESSIONS_API_URL = f"{BACKEND_URL}/sessions/"
 CLEAR_VECTOR_STORE_API_URL = f"{BACKEND_URL}/admin/vector-store/clear/"
 AUTO_SUMMARY_PROMPT = (
