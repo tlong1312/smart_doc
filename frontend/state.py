@@ -6,13 +6,10 @@ GIA_TRI_MAC_DINH = {
     "uploaded_file_names": [],
     "messages": [],
     "session_id": None,
-    "recent_chats": [],
     "session_history": [],
     "active_session_id": None,
     "session_history_dirty": True,
     "session_api_error": None,
-    "pending_delete_session_id": None,
-    "show_upload_modal": False,
     "modal_uploader_nonce": 0,
     "staged_files": [],
     "auto_upload_files": False,
@@ -47,8 +44,6 @@ def lam_moi_phien_chat():
     st.session_state["pending_auto_summary"] = False
     st.session_state["pending_user_question"] = None
     st.session_state["active_session_id"] = None
-    st.session_state["pending_delete_session_id"] = None
-    st.session_state["show_upload_modal"] = False
     st.session_state["modal_uploader_nonce"] += 1
 
 

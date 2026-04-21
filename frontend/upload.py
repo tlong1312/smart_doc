@@ -17,7 +17,7 @@ def _dua_file_vao_hang_doi_tu_uploader(uploader_key):
 def hien_thi_nut_tai_tai_lieu_ngay():
     uploader_key = f"sidebar_upload_{st.session_state['modal_uploader_nonce']}"
     danh_sach_file = st.file_uploader(
-        "Tải tài liệu",
+        " ",
         type=["pdf", "docx"],
         accept_multiple_files=True,
         key=uploader_key,
@@ -107,4 +107,3 @@ def xu_ly_tai_lieu_tam():
             )
     else:
         st.error("Chưa có tài liệu nào được xử lý thành công. Hãy thử tải lại.")
-        st.session_state["show_upload_modal"] = False

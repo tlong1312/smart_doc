@@ -5,8 +5,6 @@ import requests
 import streamlit as st
 
 BACKEND_URL = "http://127.0.0.1:8000/api"
-UPLOAD_API_URL = f"{BACKEND_URL}/documents/upload/"
-CHAT_API_URL = f"{BACKEND_URL}/chats/"
 SESSIONS_API_URL = f"{BACKEND_URL}/sessions/"
 CLEAR_VECTOR_STORE_API_URL = f"{BACKEND_URL}/admin/vector-store/clear/"
 AUTO_SUMMARY_PROMPT = (
@@ -21,7 +19,6 @@ def _queue_files_from_inline_uploader(uploader_key):
         return
     st.session_state["staged_files"] = list(selected_files)
     st.session_state["auto_upload_files"] = True
-    st.session_state["show_upload_modal"] = False
     st.session_state["modal_uploader_nonce"] = st.session_state.get("modal_uploader_nonce", 0) + 1
 
 
@@ -109,8 +106,42 @@ def delete_session(session_id):
         st.session_state["active_session_id"] = None
         st.session_state["document_ids"] = []
         st.session_state["uploaded_file_names"] = []
-    st.session_state["pending_delete_session_id"] = None
     st.session_state["session_history_dirty"] = True
+
+
+def delete_all_sessions():
+    sessions = refresh_session_history(force=True)
+    session_ids = [session.get("session_id") for session in sessions if session.get("session_id")]
+
+    if not session_ids:
+        st.session_state["session_history"] = []
+        st.session_state["session_history_dirty"] = False
+        return
+
+    errors = []
+    for session_id in session_ids:
+        try:
+            response = requests.delete(f"{SESSIONS_API_URL}{session_id}/", timeout=30)
+        except requests.RequestException:
+            errors.append(str(session_id))
+            continue
+
+        if response.status_code != 200:
+            errors.append(str(session_id))
+
+    if errors:
+        raise RuntimeError("Không thể xóa toàn bộ lịch sử hội thoại. Hãy thử lại.")
+
+    st.session_state["messages"] = []
+    st.session_state["session_id"] = None
+    st.session_state["active_session_id"] = None
+    st.session_state["document_ids"] = []
+    st.session_state["uploaded_file_names"] = []
+    st.session_state["pending_auto_summary"] = False
+    st.session_state["pending_user_question"] = None
+    st.session_state["session_history"] = []
+    st.session_state["session_history_dirty"] = True
+    st.session_state["session_api_error"] = None
 
 
 def delete_messages_in_active_session():
@@ -144,7 +175,6 @@ def clear_vector_store():
     st.session_state["uploaded_file_names"] = []
     st.session_state["pending_auto_summary"] = False
     st.session_state["pending_user_question"] = None
-    st.session_state["show_upload_modal"] = False
     st.session_state["messages"] = []
     st.session_state["session_id"] = None
     st.session_state["active_session_id"] = None
@@ -277,54 +307,47 @@ def render_sources(sources, scope_key="default"):
             st.divider()
 
 
-def push_recent_prompt(prompt):
-    title = " ".join(prompt.split())
-    if len(title) > 52:
-        title = f"{title[:49]}..."
-
-    recent_chats = [item for item in st.session_state["recent_chats"] if item != title]
-    recent_chats.insert(0, title)
-    st.session_state["recent_chats"] = recent_chats[:8]
-
-
 def _hien_thi_lich_su_tin_nhan():
     for msg_index, tin_nhan in enumerate(st.session_state["messages"]):
-        with st.chat_message(tin_nhan["role"]):
-            if tin_nhan.get("auto_generated"):
-                st.markdown(
-                    '<div class="auto-summary-label">Tóm tắt tự động sau khi tải tài liệu</div>',
-                    unsafe_allow_html=True,
-                )
-            st.markdown(tin_nhan["content"])
-            if tin_nhan.get("sources"):
-                render_sources(tin_nhan["sources"], scope_key=f"history_{msg_index}")
+        role = tin_nhan["role"]
+        with st.container(key=f"chat_{role}_message_{msg_index}"):
+            with st.chat_message(role):
+                if tin_nhan.get("auto_generated"):
+                    st.markdown(
+                        '<div class="auto-summary-label">Tóm tắt tự động sau khi tải tài liệu</div>',
+                        unsafe_allow_html=True,
+                    )
+                st.markdown(tin_nhan["content"])
+                if tin_nhan.get("sources"):
+                    render_sources(tin_nhan["sources"], scope_key=f"history_{msg_index}")
 
 
 def _xu_ly_tom_tat_tu_dong():
     if not st.session_state.get("pending_auto_summary") or not st.session_state.get("document_ids"):
         return
 
-    with st.chat_message("assistant"):
-        st.markdown(
-            '<div class="auto-summary-label">Tóm tắt tự động sau khi tải tài liệu</div>',
-            unsafe_allow_html=True,
-        )
-        with st.spinner("Đang đọc tài liệu và tạo câu trả lời đầu tiên..."):
-            try:
-                ket_qua = ask_documents(
-                    question=AUTO_SUMMARY_PROMPT,
-                    document_ids=st.session_state["document_ids"],
-                    session_id=st.session_state.get("session_id"),
-                    backend_url=BACKEND_URL,
-                )
-            except RuntimeError as exc:
-                st.error(str(exc))
-                st.session_state["pending_auto_summary"] = False
-                return
+    with st.container(key="chat_assistant_auto_summary_live"):
+        with st.chat_message("assistant"):
+            st.markdown(
+                '<div class="auto-summary-label">Tóm tắt tự động sau khi tải tài liệu</div>',
+                unsafe_allow_html=True,
+            )
+            with st.spinner("Đang đọc tài liệu và tạo câu trả lời đầu tiên..."):
+                try:
+                    ket_qua = ask_documents(
+                        question=AUTO_SUMMARY_PROMPT,
+                        document_ids=st.session_state["document_ids"],
+                        session_id=st.session_state.get("session_id"),
+                        backend_url=BACKEND_URL,
+                    )
+                except RuntimeError as exc:
+                    st.error(str(exc))
+                    st.session_state["pending_auto_summary"] = False
+                    return
 
-        st.markdown(ket_qua["answer"])
-        if ket_qua["sources"]:
-            render_sources(ket_qua["sources"], scope_key="live_auto_summary")
+            st.markdown(ket_qua["answer"])
+            if ket_qua["sources"]:
+                render_sources(ket_qua["sources"], scope_key="live_auto_summary")
 
         st.session_state["messages"].append(
             {
@@ -341,13 +364,13 @@ def _xu_ly_tom_tat_tu_dong():
 
 
 def _hien_thi_o_nhap_cau_hoi():
-    with st.container():
+    with st.container(key="chat_composer_shell"):
         col_attach, col_input = st.columns([1, 15], gap="small")
 
         with col_attach:
             uploader_nonce = st.session_state.get("modal_uploader_nonce", 0)
             uploader_key = f"inline_attach_{uploader_nonce}"
-            with st.popover("📎"):
+            with st.popover("+", use_container_width=True):
                 st.file_uploader(
                     "Tệp đính kèm",
                     type=["pdf", "docx"],
@@ -360,7 +383,7 @@ def _hien_thi_o_nhap_cau_hoi():
 
         with col_input:
             return st.chat_input(
-                "Hỏi AI bất cứ điều gì...",
+                "Hỏi bất kỳ điều gì",
                 disabled=not bool(st.session_state.get("document_ids")),
             )
 
@@ -374,28 +397,29 @@ def _xu_ly_cau_hoi_dang_cho():
 
     st.session_state["pending_user_question"] = None
 
-    push_recent_prompt(cau_hoi)
     st.session_state["messages"].append({"role": "user", "content": cau_hoi})
 
-    with st.chat_message("user"):
-        st.markdown(cau_hoi)
+    with st.container(key="chat_user_live"):
+        with st.chat_message("user"):
+            st.markdown(cau_hoi)
 
-    with st.chat_message("assistant"):
-        with st.spinner("Đang tìm câu trả lời trong tài liệu..."):
-            try:
-                ket_qua = ask_documents(
-                    question=cau_hoi,
-                    document_ids=st.session_state["document_ids"],
-                    session_id=st.session_state.get("session_id"),
-                    backend_url=BACKEND_URL,
-                )
-            except RuntimeError as exc:
-                st.error(str(exc))
-                return
+    with st.container(key="chat_assistant_live"):
+        with st.chat_message("assistant"):
+            with st.spinner("Đang tìm câu trả lời trong tài liệu..."):
+                try:
+                    ket_qua = ask_documents(
+                        question=cau_hoi,
+                        document_ids=st.session_state["document_ids"],
+                        session_id=st.session_state.get("session_id"),
+                        backend_url=BACKEND_URL,
+                    )
+                except RuntimeError as exc:
+                    st.error(str(exc))
+                    return
 
-        st.markdown(ket_qua["answer"])
-        if ket_qua["sources"]:
-            render_sources(ket_qua["sources"], scope_key="live_user_answer")
+            st.markdown(ket_qua["answer"])
+            if ket_qua["sources"]:
+                render_sources(ket_qua["sources"], scope_key="live_user_answer")
 
     st.session_state["messages"].append(
         {
@@ -418,12 +442,3 @@ def render_chat_interface():
     if cau_hoi_moi:
         st.session_state["pending_user_question"] = cau_hoi_moi
         st.rerun()
-
-
-# Backward-compatible wrappers for older app calls.
-def render_chat_ui():
-    render_chat_interface()
-
-
-def render_sidebar_tools():
-    return None
