@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-t9kf-v@f1fiuq7)gxh^52scjfctnhf5a#v66x*xjvda&1-=1*m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'rag_chat_db',
         'USER': 'postgres',
         'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
