@@ -13,7 +13,7 @@ Before getting started, make sure you have the following installed on your machi
 
 Since the project is configured to connect to the LLM via `http://host.docker.internal:11434`, you need to install and run Ollama directly on your Host Machine, **not** inside a Docker container.
 
-1. Download and install Ollama from the official website: [https://ollama.com/](https://ollama.com/)
+1. Download and install Ollama from the official website: https://ollama.com/
 2. Open your Terminal (or Command Prompt/PowerShell) and run the following command to download and run the Qwen2.5 model (choose the 3B or 7B version depending on your machine's RAM/VRAM):
 
 **For the 3B version (lighter, recommended for machines with less RAM):**
@@ -59,6 +59,11 @@ After completing the setup, you can access the system via your web browser:
 * **Frontend (Streamlit UI):** http://localhost:8501
 * **Backend API / Admin (Django):** http://localhost:8000
 * **Database (PostgreSQL):** `localhost:5433` (Username: `postgres` | Password: `123`)
+
+## 6. Important Performance Note
+
+* **Cold Start Delay:** Your first interaction with the system (e.g., sending the first message or uploading the first document) may take significantly longer to process. This is because the system needs to download Hugging Face models (if not already cached) and load the LLM into memory for the first time.
+* **Faster Subsequent Responses:** Once the initial loading is complete, the models will be ready in memory, and all subsequent queries will be processed much faster.
 
 ---
 
