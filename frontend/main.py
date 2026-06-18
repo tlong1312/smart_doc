@@ -56,6 +56,23 @@ def confirm_delete_all_sessions_dialog():
             st.error(str(exc))
 
 
+@st.dialog("Xác nhận xóa đoạn chat")
+def confirm_delete_session_dialog(session_id):
+    st.write("Bạn có chắc muốn xóa đoạn chat này không? Hành động này không thể hoàn tác.")
+
+    col_cancel, col_confirm = st.columns(2, gap="small")
+
+    if col_cancel.button("Hủy", key=f"cancel_delete_session_{session_id}", use_container_width=True):
+        st.rerun()
+
+    if col_confirm.button("Xóa", key=f"confirm_delete_session_{session_id}", use_container_width=True):
+        try:
+            chat_ui.delete_session(session_id)
+            st.rerun()
+        except RuntimeError as exc:
+            st.error(str(exc))
+
+
 def _tom_tat_ngan_cho_sidebar(raw_preview):
     if not raw_preview:
         return "Phiên hội thoại mới"
@@ -133,11 +150,7 @@ def _hien_thi_danh_sach_hoi_thoai():
 
             with col_delete:
                 if st.button("🗑", key=f"delete_session_sidebar_{session_id}", use_container_width=True):
-                    try:
-                        chat_ui.delete_session(session_id)
-                        st.rerun()
-                    except RuntimeError as exc:
-                        st.error(str(exc))
+                    confirm_delete_session_dialog(session_id)
 
 
 def hien_thi_thanh_ben():
